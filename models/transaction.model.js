@@ -19,7 +19,7 @@ const TransactionSchema = new Schema({
   memo: {
     type: String,
   },
-  xType: {
+  isDebit: {
     type: Boolean,
     required: true
   }
