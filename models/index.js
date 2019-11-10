@@ -1,3 +1,5 @@
 module.exports = {
-  Transaction: require('./transaction.model')
+  User: require('./user.model'),
+  Transaction: require('./transaction.model'),
+  Payee: require('./payee.model')
 };
