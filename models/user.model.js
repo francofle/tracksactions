@@ -14,6 +14,10 @@ const UserSchema = new Schema({
   firebaseId: {
     type: String
   },
+  totalBalance: {
+    type: mongoose.Decimal128,
+    required: true
+  },
   transactions: [
     {
       type: Schema.Types.ObjectID,
