@@ -1,4 +1,5 @@
 const db = require('../models');
+const admin = require('firebase-admin');
 
 module.exports = {
   findAll: (req, res) => {
@@ -34,6 +35,29 @@ module.exports = {
         res.json(transactionsByPayee);
       })
       .catch(err => res.status(422).json(err));
+  },
+  createUser: async (req, res) => {
+    try {
+      const user = await admin.auth().createUser({
+        email: req.body.email,
+        password: req.body.password,
+        displayName: req.body.name
+      });
+
+      try {
+        const dbUser = await db.User.findOneAndUpdate(
+          {email: req.body.email},
+          {firebaseId: user.uid, transactions: [], ...req.body},
+          {new: true, upsert: true}
+          );
+
+        await res.json(dbUser);
+      } catch (error) {
+        await res.json(error);
+      }
+    } catch (error) {
+      await res.json(error);
+    }
   }
 
 };

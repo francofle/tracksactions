@@ -13,4 +13,7 @@ router.route('/:id')
 router.route('/byPayees/:id')
   .get(usersController.transactionsByPayee);
 
+router.route('/register')
+  .post(usersController.createUser);
+
 module.exports = router;
