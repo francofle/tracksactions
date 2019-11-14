@@ -2,22 +2,10 @@ const db = require('../models');
 
 module.exports = {
   findAll: (req, res) => {
-    db.Payee.find(req.query)
-      .sort({date: 1})
-      .then(payee => res.json(payee))
+    db.Payee.find()
+      .sort({name: 1})
+      .then(payees => res.json(payees))
       .catch(error => res.status(422).json(error));
-  },
-  findById: (req, res) => {
-
-  },
-  create: (req, res) => {
-
-  },
-  update: (req, res) => {
-
-  },
-  remove: (req, res) => {
-
   }
 };
 

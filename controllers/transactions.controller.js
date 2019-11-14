@@ -16,11 +16,11 @@ module.exports = {
   },
   create: (req, res) => {
     const createTransaction = async () => {
-      const { payeeName, amount, memo, isDebit} = req.body;
+      const { payee, amount, memo, date, isDebit} = req.body;
 
       const payeeId = await db.Payee.findOneAndUpdate(
-        { name: payeeName },
-        { name: payeeName },
+        { name: payee },
+        { name: payee },
         { new: true, upsert: true }
       )
         .then(payee => payee.id)
@@ -32,7 +32,8 @@ module.exports = {
         payee: payeeId,
         amount: amount,
         memo: memo,
-        isDebit: isDebit
+        isDebit: isDebit,
+        date: date
       })
         .then(transaction => transaction)
         .catch(error => {
@@ -51,7 +52,7 @@ module.exports = {
         },
         { new: true }
       )
-        .populate({ path: "transactions", populate: { path: "payee" } })
+        .populate({ path: "transactions", populate: { path: "payee" }, options: {sort: {date: -1}} })
         .then(user => res.json(user))
         .catch(error => {
           return res.status(422).json(error);

@@ -1,10 +1,11 @@
 const router = require("express").Router();
 const transactionsController = require("../../controllers/transactions.controller");
+const checkIfAuthenticated = require("../../controllers/firebaseAuth.middlewares");
 
 // "/api/transactions" route
 router
   .route("/")
-  .get(transactionsController.findAll)
+  .get(checkIfAuthenticated, transactionsController.findAll)
   .delete(transactionsController.remove);
 
 // "/api/transcations/:id" route
