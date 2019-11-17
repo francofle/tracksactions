@@ -61,7 +61,6 @@ module.exports = {
     }
   },
   getUserObject: async (req, res) => {
-    console.log(req.body.uid);
     try {
       const userObject = await db.User
         .findOne({firebaseId: `${req.body.uid}`})
