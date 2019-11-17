@@ -28,19 +28,25 @@ export const loginUser = async (email, password) => {
   const user = await auth
     .signInWithEmailAndPassword(email, password)
     .then(response => response.user)
-    .catch(error => console.log(error));
-  if (user) {
+    .catch(error => error);
+  if (!user.code) {
     try {
+      const authToken = await auth.currentUser.getIdToken();
       const response = await fetch(`/api/users/getUserObject`, {
         method: "post",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${authToken}`
+        },
         body: JSON.stringify({ uid: user.uid })
       });
       return await response.json();
     } catch (error) {
-      console.log(error)
+      return error
     }
   }
+  return user;
+
 };
 
 export default firebase;

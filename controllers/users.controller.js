@@ -63,14 +63,13 @@ module.exports = {
   getUserObject: async (req, res) => {
     try {
       const userObject = await db.User
-        .findOne({firebaseId: `${req.body.uid}`})
-        .populate(
-          {
-            path: 'transactions',
-            populate: {path: 'payee'},
-            options: {sort: {date: -1}}
-          }).then();
-      await res.json(userObject);
+        .findOne({firebaseId: `${req.body.uid}`});
+      await res.json({
+        name: userObject.name,
+        email: userObject.email,
+        firebaseId: userObject.firebaseId,
+        totalBalance: userObject.totalBalance
+      });
 
     } catch (error) {
       await res.status(422).json(error)

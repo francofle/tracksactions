@@ -18,9 +18,9 @@ const Header = ({ currentUser }) => {
           Profile
         </Link>
         {currentUser ? (
-          <Link className="nav-item headerLink" onClick={() => auth.signOut()}>
+          <button className="nav-item headerLink" onClick={() => auth.signOut()}>
             Sign Out
-          </Link>
+          </button>
         ) : (
           <Link className="nav-item headerLink" to={"/signin"}>
             Sign In
