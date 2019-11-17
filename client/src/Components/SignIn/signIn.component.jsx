@@ -24,6 +24,7 @@ class SignIn extends React.Component {
     loginUser(email, password)
       .then(user => {
         if (user.code) {
+          // TODO: Handle error if user.code exists (maybe show a modal)
           alert(user.message)
         }
       });
