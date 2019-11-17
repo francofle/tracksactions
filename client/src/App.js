@@ -7,44 +7,39 @@ import HomePage from "./Pages/HomePage/homepage.component";
 import { auth } from "./firebase/firebase.utils";
 import Header from "./Components/Header/header.component";
 
+// Redux:
+import {connect} from 'react-redux';
+import {setCurrentUser} from "./redux/user/user.actions";
+import {selectCurrentUser} from "./redux/user/user.selectors";
+import {createStructuredSelector} from "reselect";
+
 
 class App extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      currentUser: null
-    };
-  }
 
   unsubscribeFromAuth = null;
 
   componentDidMount() {
+    const {setCurrentUser} = this.props;
+
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userObject => {
-      if (!userObject) return;
+      let data = null;
+      if (userObject) {
+        const response  = await fetch('/api/users/getUserObject', {
+          method: 'post',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({uid: userObject.uid})
+        });
 
-      const response = await fetch('/api/users/getUserObject', {
-        method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({uid: userObject.uid})
-      });
+        data = await response.json();
 
-      const data = await response.json();
-
-      this.setState({
-        currentUser: data
-      })
-
+      }
+      setCurrentUser(data)
     });
   }
 
   componentWillUnmount() {
     this.unsubscribeFromAuth();
   }
-
-  setCurrentUser = (userObject) => {
-
-  };
 
   render() {
     // TODO: Add header and connect to redux.  (13 in redux OneNote)
@@ -60,4 +55,14 @@ class App extends React.Component {
   }
 }
 
-export default App;
+ const mapStateToProps = createStructuredSelector({
+   currentUser: selectCurrentUser
+ });
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCurrentUser : user => dispatch(setCurrentUser(user))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
