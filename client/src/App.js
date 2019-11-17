@@ -2,7 +2,7 @@ import React from "react";
 import {Switch, Route} from 'react-router-dom';
 import "./App.css";
 import SignIn from "./Components/SignIn/signIn.component";
-import HomePage from "./Pages/homepage.component";
+import HomePage from "./Pages/HomePage/homepage.component";
 //firebase Auth
 import { auth } from "./firebase/firebase.utils";
 import Header from "./Components/Header/header.component";
@@ -49,7 +49,7 @@ class App extends React.Component {
   render() {
     // TODO: Add header and connect to redux.  (13 in redux OneNote)
     return (
-      <div className="App container-fluid">
+      <div className="App">
         <Header />
         <Switch>
           <Route exact path={'/'} component={HomePage}/>
