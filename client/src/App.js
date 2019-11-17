@@ -24,14 +24,22 @@ class App extends React.Component {
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userObject => {
       let data = null;
       if (userObject) {
+        const token = await auth.currentUser.getIdToken();
         const response  = await fetch('/api/users/getUserObject', {
           method: 'post',
-          headers: {'Content-Type': 'application/json'},
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${token}`
+          },
           body: JSON.stringify({uid: userObject.uid})
         });
 
         data = await response.json();
 
+        data = {
+          ...data,
+          token
+        };
       }
       setCurrentUser(data)
     });
