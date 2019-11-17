@@ -1,5 +1,6 @@
 import React from 'react';
 import {loginUser} from "../../firebase/firebase.utils";
+import { auth} from "../../firebase/firebase.utils";
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -48,6 +49,9 @@ class SignIn extends React.Component {
           </div>
           <button type="submit">
             Sign In
+          </button>
+          <button type="submit" onClick={() => auth.signOut()}>
+            Sign Out
           </button>
         </form>
       </div>
