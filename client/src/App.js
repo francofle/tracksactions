@@ -50,7 +50,6 @@ class App extends React.Component {
   }
 
   render() {
-    // TODO: Add header and connect to redux.  (13 in redux OneNote)
     return (
       <div className="App">
         <Header />
