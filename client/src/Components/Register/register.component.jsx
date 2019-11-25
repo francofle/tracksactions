@@ -1,6 +1,7 @@
 import React from "react";
 import "./register.styles.sass";
 import { Link } from "react-router-dom";
+import {auth} from "../../firebase/firebase.utils";
 
 class Register extends React.Component {
   constructor(props) {
@@ -18,9 +19,6 @@ class Register extends React.Component {
     this.setState(
       {
         [name]: value
-      },
-      () => {
-        console.log(this.state);
       }
     );
   };
