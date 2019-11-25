@@ -8,7 +8,7 @@ import {selectCurrentUser} from "../../redux/user/user.selectors";
 
 const Header = ({ currentUser }) => {
   return (
-    <div className="navbar header">
+    <div className="navbar header sticky-top">
       <Link to={"/"} className="navbar-brand logo">
         <span>Track</span>Sactions
       </Link>

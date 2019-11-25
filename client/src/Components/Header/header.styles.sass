@@ -1,7 +1,9 @@
 .header
+  position: absolute
   background-color: rgb(139,215,136)
   height: 60px
   color: white
+  width: 100%
 
   .logo
     font-size: 24px
@@ -10,16 +12,19 @@
     & span
       font-weight: 900
 
-  .headerLink
-    color: white
-    margin: 0 20px
-    background-color: transparent
-    border: none
-    padding: 0
+  .headerLinks
+    margin-left: auto
 
-    &:hover
-      text-shadow: white 0 0 10px
-      text-decoration: none
+    .headerLink
+      color: white
+      margin-right: 20px
+      background-color: transparent
+      border: none
+      padding: 0
+
+      &:hover
+        text-shadow: white 0 0 10px
+        text-decoration: none
 
 
 

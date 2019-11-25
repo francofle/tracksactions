@@ -1,8 +1,9 @@
 import React from "react";
 import {Switch, Route, Redirect} from 'react-router-dom';
 import "./App.css";
-import SignIn from "./Pages/SignIn/signIn.component";
 import HomePage from "./Pages/HomePage/homepage.component";
+import SignInRegister from "./Pages/SignIn-Register/signIn-register.component";
+
 //firebase Auth
 import { auth } from "./firebase/firebase.utils";
 import Header from "./Components/Header/header.component";
@@ -59,10 +60,15 @@ class App extends React.Component {
               <HomePage/> :
               <Redirect to={'/signIn'}/>
           }} />
-          <Route path={'/signIn'} render={() => {
+          <Route exact path={'/signIn'} render={() => {
             return this.props.currentUser ?
               <Redirect to={'/'}/> :
-              <SignIn />
+              <SignInRegister />
+          }}/>
+          <Route exact path={'/register'} render={() => {
+            return this.props.currentUser ?
+              <Redirect to={'/'}/> :
+              <SignInRegister />
           }}/>
         </Switch>
       </div>

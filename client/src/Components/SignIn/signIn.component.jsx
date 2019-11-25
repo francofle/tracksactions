@@ -35,7 +35,7 @@ class SignIn extends React.Component {
     return (
       <div className="signIn w-100">
         <div className="formContainer">
-          <h1>Sign In</h1>
+          <h1 className='title'>Sign In</h1>
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
               <input
@@ -49,7 +49,7 @@ class SignIn extends React.Component {
               <input
                 name="password"
                 type="password"
-                placeholder="password"
+                placeholder="Password"
                 onChange={this.handleInputChange}
               />
             </div>
