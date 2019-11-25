@@ -1,6 +1,7 @@
 import React from "react";
 import "./signIn.styles.sass";
 import { loginUser } from "../../firebase/firebase.utils";
+import { Link } from "react-router-dom";
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -52,7 +53,16 @@ class SignIn extends React.Component {
                 onChange={this.handleInputChange}
               />
             </div>
-            <button type="submit" className='submitBtn'>Sign In</button>
+            <div className="signInButtonDiv">
+              <button
+                className='signInBtn'
+                type="submit"
+                onClick={this.handleSubmit}
+              >
+                Sign In
+              </button>
+              <Link to="/register" className='registerLink'>Register</Link>
+            </div>
           </form>
         </div>
       </div>
