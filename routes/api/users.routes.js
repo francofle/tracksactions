@@ -4,7 +4,7 @@ const checkIfAuthenticated = require('../../controllers/firebaseAuth.middlewares
 
 //  '/api/users/' routes
 router.route('/')
-  .get(checkIfAuthenticated, usersController.findAll)
+  .get(checkIfAuthenticated, usersController.findAll);
 //   .post(usersController.create);
 //
 router.route('/:id')
@@ -16,7 +16,7 @@ router.route('/byPayees/:id')
   .get(checkIfAuthenticated, usersController.transactionsByPayee);
 
 router.route('/register')
-  .post(checkIfAuthenticated, usersController.createUser);
+  .post(usersController.createUser);
 
 router.route('/getUserObject')
   .post(checkIfAuthenticated, usersController.getUserObject);
