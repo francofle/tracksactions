@@ -36,11 +36,12 @@ class SignIn extends React.Component {
       <div className="signIn w-100">
         <div className="formContainer">
           <h1 className='title'>Sign In</h1>
-          <form onSubmit={this.handleSubmit}>
+          <form className='signInForm' onSubmit={this.handleSubmit}>
             <div className="form-group">
               <input
                 name="email"
                 type="email"
+                className='signInFormInput'
                 placeholder="Email"
                 onChange={this.handleInputChange}
               />
@@ -49,6 +50,7 @@ class SignIn extends React.Component {
               <input
                 name="password"
                 type="password"
+                className='signInFormInput'
                 placeholder="Password"
                 onChange={this.handleInputChange}
               />
