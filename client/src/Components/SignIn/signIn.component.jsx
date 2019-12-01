@@ -11,6 +11,9 @@ class SignIn extends React.Component {
       email: "",
       password: ""
     };
+
+    this.emailInput = React.createRef();
+    this.passwordInput = React.createRef();
   }
 
   handleInputChange = event => {
@@ -26,6 +29,8 @@ class SignIn extends React.Component {
     API.loginUser(email, password).then(user => {
       if (user.code) {
         // TODO: Handle error if user.code exists (maybe show a modal)
+        this.emailInput.value = '';
+        this.passwordInput.value = '';
         alert(user.message);
       }
     });
@@ -44,6 +49,7 @@ class SignIn extends React.Component {
                 className='signInFormInput'
                 placeholder="Email"
                 onChange={this.handleInputChange}
+                ref={element => this.emailInput = element}
               />
             </div>
             <div className="form-group">
@@ -53,6 +59,7 @@ class SignIn extends React.Component {
                 className='signInFormInput'
                 placeholder="Password"
                 onChange={this.handleInputChange}
+                ref={element => this.passwordInput = element}
               />
             </div>
             <div className="signInButtonDiv">
