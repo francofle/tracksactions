@@ -1,6 +1,6 @@
 import React from "react";
 import "./signIn.styles.sass";
-import { loginUser } from "../../firebase/firebase.utils";
+import API from '../../utils/API';
 import { Link } from "react-router-dom";
 
 class SignIn extends React.Component {
@@ -23,7 +23,7 @@ class SignIn extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     const { email, password } = this.state;
-    loginUser(email, password).then(user => {
+    API.loginUser(email, password).then(user => {
       if (user.code) {
         // TODO: Handle error if user.code exists (maybe show a modal)
         alert(user.message);

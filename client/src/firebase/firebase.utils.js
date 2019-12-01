@@ -18,35 +18,4 @@ firebase.initializeApp(config);
 
 export const auth = firebase.auth();
 
-// create firebase Account
-export const createUserAccount = data => {
-  return fetch("/api/users/register", data).then(response => response.data);
-};
-
-// login user
-export const loginUser = async (email, password) => {
-  const user = await auth
-    .signInWithEmailAndPassword(email, password)
-    .then(response => response.user)
-    .catch(error => error);
-  if (!user.code) {
-    try {
-      const authToken = await auth.currentUser.getIdToken();
-      const response = await fetch(`/api/users/getUserObject`, {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${authToken}`
-        },
-        body: JSON.stringify({ uid: user.uid })
-      });
-      return await response.json();
-    } catch (error) {
-      return error
-    }
-  }
-  return user;
-
-};
-
 export default firebase;
