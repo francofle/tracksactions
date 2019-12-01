@@ -2,7 +2,7 @@ import { auth } from "../firebase/firebase.utils";
 
 export default {
   createUser: async userData => {
-    return fetch("/api/createUser", {
+    return fetch("/api/users/register", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData)

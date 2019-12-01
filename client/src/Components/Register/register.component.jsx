@@ -1,6 +1,7 @@
 import React from "react";
 import "./register.styles.sass";
 import { Link } from "react-router-dom";
+import API from "../../utils/API";
 
 class Register extends React.Component {
   constructor(props) {
@@ -11,23 +12,34 @@ class Register extends React.Component {
       email: "",
       password: ""
     };
+
+    this.passwordField = React.createRef();
   }
 
   handleInputChange = event => {
     const { name, value } = event.target;
-    this.setState(
-      {
-        [name]: value
-      }
-    );
+    this.setState({
+      [name]: value
+    });
   };
 
   handleSubmit = event => {
     event.preventDefault();
-    const {name, email, password} = this.state;
-
-
-
+    const { name, email, password } = this.state;
+    console.log(name, email, password);
+    // TODO: change alerts() to be displayed in page instead of alerts
+    if (name === "" || !name) {
+      return alert("Please enter a name");
+    } else if (email === "" || !name) {
+      return alert("Please enter an email address");
+    } else if (password === "" || !password || password.length < 6) {
+      return alert("Please enter a password with at least 6 characters");
+    } else {
+      API.createUser({name, email, password}).then(user => {
+        //TODO: login user upon success
+        console.log(user);
+      })
+    }
   };
 
   render() {
@@ -58,6 +70,8 @@ class Register extends React.Component {
               type="password"
               placeholder="Password"
               onChange={this.handleInputChange}
+              ref={element => (this.passwordField = element)}
+              onFocus={() => this.passwordField.value = ''}
             />
           </div>
           <div className="registerButtonDiv">
