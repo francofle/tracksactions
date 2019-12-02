@@ -35,9 +35,13 @@ class Register extends React.Component {
     } else if (password === "" || !password || password.length < 6) {
       return alert("Please enter a password with at least 6 characters");
     } else {
-      API.createUser({name, email, password}).then(user => {
+      API.createUser({name, email, password})
+        .then(response => response.json())
+        .then(data => {
         //TODO: login user upon success
-        console.log(user);
+          if (!data.code) {
+            API.loginUser(email, password);
+          }
       })
     }
   };
