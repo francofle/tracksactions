@@ -1,11 +1,11 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import { connect } from 'react-redux';
+import AccountSummary from "../../Components/AccountSummary/accountSummary.component";
 
 const HomePage = () => {
   return (
     <div>
-      <h1>Homepage</h1>
-      <Link to={'/signin'}>Sign In</Link>
+      <AccountSummary/>
     </div>
   )
 };
