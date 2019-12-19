@@ -1,4 +1,5 @@
 import { auth } from "../firebase/firebase.utils";
+import firebase from "firebase";
 
 export default {
   createUser: async userData => {
@@ -9,10 +10,11 @@ export default {
     });
   },
   loginUser: async (email, password) => {
-    const user = await auth
-      .signInWithEmailAndPassword(email, password)
+    const user = await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+      .then(() => auth.signInWithEmailAndPassword(email, password))
       .then(response => response.user)
       .catch(error => error);
+
     if (!user.code) {
       try {
         const authToken = await auth.currentUser.getIdToken();

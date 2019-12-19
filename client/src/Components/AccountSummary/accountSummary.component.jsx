@@ -1,10 +1,19 @@
 import React from "react";
 import "./accountSummary.styles.sass";
+import ProfilePic from "../ProfilePic/profilePic.component";
+import {separateNumbersWithComma} from "../../utils/utilities";
 
-const AccountSummary = () => {
+const AccountSummary = ({currentUser}) => {
+
   return (
     <div className="accountSummary">
-      <h1>Account Summary Div</h1>
+      <div className="profileImgContainer">
+        <ProfilePic profileImg={'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3578&q=80'}/>
+      </div>
+        <div className="accountSummaryBalance">
+          <p>Hello {currentUser.name}, your current balance is:</p>
+          <h1><span className='balance'>${separateNumbersWithComma(currentUser.totalBalance.$numberDecimal)}</span></h1>
+        </div>
     </div>
   );
 };

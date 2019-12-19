@@ -1,8 +1,33 @@
+$bgMainColor: rgb(242,242,242)
+$textColor: #1E932E
+
 .accountSummary
   margin-top: 60px
   width: 100%
   height: 160px
-  background-color: rgb(242,242,242)
+  background-color: $bgMainColor
   display: flex
-  justify-content: center
-  align-items: center
+
+  .profileImgContainer
+    width: 120px
+    height: 100%
+    padding-left: 20px
+    margin: 0
+    display: flex
+    align-items: center
+    justify-content: center
+
+
+
+  .accountSummaryBalance
+    width: 100%
+    display: flex
+    flex-direction: column
+    width: 100%
+    height: 100%
+    display: flex
+    justify-content: center
+    align-items: center
+    color: $textColor
+    .balance
+      font-weight: bold
