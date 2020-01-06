@@ -3,6 +3,7 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 import "./App.css";
 import HomePage from "./Pages/HomePage/homepage.component";
 import SignInRegister from "./Pages/SignIn-Register/signIn-register.component";
+import NewTransactionForm from "./Components/NewTransactionForm/newTransactionForm.component";
 
 //firebase Auth
 import { auth } from "./firebase/firebase.utils";
@@ -70,6 +71,7 @@ class App extends React.Component {
               <Redirect to={'/'}/> :
               <SignInRegister />
           }}/>
+          <Route exact path={'/newTransaction'} component={NewTransactionForm}/>
         </Switch>
       </div>
     );
