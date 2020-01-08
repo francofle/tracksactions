@@ -1,83 +1,144 @@
-import React from "react";
-import "./newTrasnactionForm.styles.sass";
-import moment from "moment";
+import React from 'react';
+import './newTrasnactionForm.styles.sass';
+import moment from 'moment';
 
 class NewTransactionForm extends React.Component {
   state = {
-    date: moment().format("MM/DD/YYYY"),
-    payee: "Payee",
-    trxAmount: 19.99
+    trxDate: moment().format('MM/DD/YYYY'),
+    trxPayee: '',
+    trxMemo: '',
+    trxAmount: '',
+    trxType: ''
+  };
+
+  // set state based on the text/values in the input fields
+  handleInputChange = event => {
+    const { name } = event.target;
+    let { value } = event.target;
+
+    // TODO: Validate and format amount before setting state
+    if (name === 'trxAmount') {
+      value = parseFloat(value).toFixed(2);
+    }
+
+    this.setState(
+      {
+        [name]: value
+      },
+      () => console.log(this.state)
+    );
+  };
+
+  // validate field content and add transaction to Mongo
+  handleAddTransactionButton = event => {
+    event.preventDefault();
+
+    const { trxDate, trxPayee, trxAmount, trxMemo, trxType } = this.state;
+
+    if (
+      !trxDate ||
+      !trxPayee ||
+      trxPayee === '' ||
+      !trxAmount ||
+      trxAmount < 0.01 ||
+      trxAmount === '' ||
+      !trxType
+    ) {
+      // TODO: remove alert() and add a message div
+      alert('Date, Payee, Amount and Transaction Type are required');
+    } else {
+      // TODO: submit transaction to Mongo
+      console.log(`
+        Date: ${trxDate}, 
+        Payee: ${trxPayee},
+        Amount: ${trxAmount}, 
+        Memo: ${trxMemo}, 
+        Type: ${trxType}
+       `);
+    }
   };
 
   render() {
     return (
-      <div className="newTrxFormContainer">
+      <div className='newTrxFormContainer'>
         <div className='newTrxFormTitleContainer'>
-          <h1 className="newTransactionFormTitle">New Transaction</h1>
+          <h1 className='newTransactionFormTitle'>New Transaction</h1>
         </div>
 
-        <form className="newTransactionForm">
-          <div className="rowContainer">
-            <div className="form-group">
-              <div className="input-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">Date</span>
+        <form className='newTransactionForm'>
+          <div className='rowContainer'>
+            <div className='form-group'>
+              <div className='input-group'>
+                <div className='input-group-prepend'>
+                  <span className='input-group-text'>Date</span>
                 </div>
                 <input
-                  className="trxDate"
-                  type="date"
-                  placeholder={this.state.date}
+                  className='trxDate'
+                  type='date'
+                  name='trxDate'
+                  placeholder={this.state.trxDate}
+                  onChange={this.handleInputChange}
                 />
               </div>
             </div>
-            <div className="form-group">
-              <div className="input-group">
-                <div className="input-group-prepend">
+            <div className='form-group'>
+              <div className='input-group'>
+                <div className='input-group-prepend'>
                   <span className='input-group-text'>Payee:</span>
                   <input
-                    className="trxPayee"
-                    id="trxPayee"
-                    type="text"
-                    placeholder={this.state.payee}
+                    className='trxPayee'
+                    id='trxPayee'
+                    type='text'
+                    name='trxPayee'
+                    onChange={this.handleInputChange}
                   />
                 </div>
               </div>
             </div>
-            <div className="form-group">
+            <div className='form-group'>
               <div className='input-group'>
-                <div className="input-group-prepend">
+                <div className='input-group-prepend'>
                   <span className='input-group-text'>Amount ($)</span>
                   <input
-                    id="trxAmount"
-                    className="trxAmount"
-                    type="number"
-                    min="0.00"
-                    step="0.01"
-                    value="19.99"
+                    id='trxAmount'
+                    name='trxAmount'
+                    className='trxAmount'
+                    type='number'
+                    min='0.00'
+                    step='0.01'
+                    onChange={this.handleInputChange}
                   />
-                </div>
-                </div>
-              </div>
-          </div>
-          <div className="rowContainer">
-            <div className="from-group trxMemoFormGroup">
-              <div className="input-group">
-                <div className="input-group-prepend trxMemoInput">
-                  <span className="input-group-text">Memo:</span>
-                  <input type="text" className='trxMemo w-100'/>
                 </div>
               </div>
             </div>
           </div>
-          <div className="debitCreditSelectContainer">
-            <label htmlFor="trxType">Transaction Type:</label>
-            <select name="trxType" id="trxType">
-              <option disabled selected>Choose one...</option>
-              <option value="debit">Expense</option>
-              <option value="credit">Income</option>
+          <div className='rowContainer'>
+            <div className='from-group trxMemoFormGroup'>
+              <div className='input-group'>
+                <div className='input-group-prepend trxMemoInput'>
+                  <span className='input-group-text'>Memo:</span>
+                  <input
+                    type='text'
+                    name='trxMemo'
+                    className='trxMemo w-100'
+                    placeholder='Optional'
+                    onChange={this.handleInputChange}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='debitCreditSelectContainer'>
+            <label htmlFor='trxType'>Transaction Type:</label>
+            <select name='trxType' id='trxType' onChange={this.handleInputChange}>
+              <option defaultValue>Choose one...</option>
+              <option value='expense'>Expense</option>
+              <option value='income'>Income</option>
             </select>
           </div>
-          <button type='submit' className='addTrxButton'>Add Transaction</button>
+          <button type='submit' className='addTrxButton' onClick={this.handleAddTransactionButton}>
+            Add Transaction
+          </button>
         </form>
       </div>
     );
