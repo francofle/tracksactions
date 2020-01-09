@@ -9,7 +9,7 @@ const TransactionSchema = new Schema({
   },
   payee: {
     type: Schema.Types.ObjectID,
-    ref: "Payee"
+    ref: 'Payee'
   },
   amount: {
     type: mongoose.Decimal128,
@@ -17,7 +17,7 @@ const TransactionSchema = new Schema({
     required: true
   },
   memo: {
-    type: String,
+    type: String
   },
   isDebit: {
     type: Boolean,
@@ -25,6 +25,6 @@ const TransactionSchema = new Schema({
   }
 });
 
-const Transaction = mongoose.model("Transaction", TransactionSchema);
+const Transaction = mongoose.model('Transaction', TransactionSchema);
 
 module.exports = Transaction;

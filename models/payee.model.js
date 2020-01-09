@@ -10,6 +10,6 @@ const PayeeSchema = new Schema({
   }
 });
 
-const Payee = mongoose.model("Payee", PayeeSchema);
+const Payee = mongoose.model('Payee', PayeeSchema);
 
 module.exports = Payee;

@@ -19,7 +19,7 @@ const checkIfAuthenticated = (req, res, next) => {
       return next();
     } catch (error) {
       console.log(error);
-      return res.status(401).json({error: 'You are not authorized to make this request'});
+      return res.status(401).json({ error: 'You are not authorized to make this request' });
     }
   });
 };

@@ -1,5 +1,5 @@
-const db = require("../models");
-const admin = require("firebase-admin");
+const db = require('../models');
+const admin = require('firebase-admin');
 
 module.exports = {
   findAll: (req, res) => {
@@ -11,10 +11,10 @@ module.exports = {
   findTransactions: (req, res) => {
     db.User.findOne({ firebaseID: req.params.id })
       .populate({
-        path: "transactions",
+        path: 'transactions',
         populate: {
-          path: "payee",
-          select: "name"
+          path: 'payee',
+          select: 'name'
         },
         options: {
           sort: {
@@ -22,13 +22,13 @@ module.exports = {
           }
         }
       })
-      .select("transactions")
+      .select('transactions')
       .then(transactions => res.json(transactions))
       .catch(err => res.status(422).json(err));
   },
   transactionsByPayee: (req, res) => {
     db.User.findOne({ firebaseId: req.params.id })
-      .populate({ path: "transactions", populate: { path: "payee" } })
+      .populate({ path: 'transactions', populate: { path: 'payee' } })
       .then(user => {
         const transactionsByPayee = user.transactions.filter(
           transaction => req.body.payeeName === transaction.payee.name
@@ -62,17 +62,15 @@ module.exports = {
   },
   getUserObject: async (req, res) => {
     try {
-      const userObject = await db.User
-        .findOne({firebaseId: `${req.body.uid}`});
+      const userObject = await db.User.findOne({ firebaseId: `${req.body.uid}` });
       await res.json({
         name: userObject.name,
         email: userObject.email,
         firebaseId: userObject.firebaseId,
         totalBalance: userObject.totalBalance
       });
-
     } catch (error) {
-      await res.status(422).json(error)
+      await res.status(422).json(error);
     }
   }
 };

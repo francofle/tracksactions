@@ -1,22 +1,22 @@
-const db = require("../models");
+const db = require('../models');
 
 module.exports = {
   findAll: (req, res) => {
     db.Transaction.find(req.query)
       .sort({ date: -1 })
-      .populate("payee")
+      .populate('payee')
       .then(transactions => res.json(transactions))
       .catch(error => res.status(422).json(error));
   },
   findById: (req, res) => {
     db.Transaction.find(req.params.id)
-      .populate("payee")
+      .populate('payee')
       .then(transaction => res.json(transaction))
       .catch(error => res.status(422).json(error));
   },
   create: (req, res) => {
     const createTransaction = async () => {
-      const { payee, amount, memo, date, isDebit} = req.body;
+      const { payee, amount, memo, date, isDebit } = req.body;
 
       const payeeId = await db.Payee.findOneAndUpdate(
         { name: payee },
@@ -45,14 +45,16 @@ module.exports = {
         {
           $push: { transactions: transaction.id },
           $inc: {
-            totalBalance: transaction.isDebit
-              ? -transaction.amount
-              : transaction.amount
+            totalBalance: transaction.isDebit ? -transaction.amount : transaction.amount
           }
         },
         { new: true }
       )
-        .populate({ path: "transactions", populate: { path: "payee" }, options: {sort: {date: -1}} })
+        .populate({
+          path: 'transactions',
+          populate: { path: 'payee' },
+          options: { sort: { date: -1 } }
+        })
         .then(user => res.json(user))
         .catch(error => {
           return res.status(422).json(error);
@@ -60,7 +62,7 @@ module.exports = {
     };
 
     if (!req.body) {
-      res.status(422).json("Transaction incomplete.");
+      res.status(422).json('Transaction incomplete.');
     } else {
       createTransaction();
     }
@@ -74,12 +76,12 @@ module.exports = {
   },
   remove: (req, res) => {
     db.Transaction.deleteMany()
-      .then(data => res.json({transactionsRemoved: data.deletedCount}))
+      .then(data => res.json({ transactionsRemoved: data.deletedCount }))
       .catch(err => res.status(422).json(err));
   },
   removeById: (req, res) => {
-    db.Transaction.deleteOne({_id: req.params.id})
-      .then(data => res.json({transactionsRemoved: data.n}))
-      .catch(err => res.status(422).json(err))
+    db.Transaction.deleteOne({ _id: req.params.id })
+      .then(data => res.json({ transactionsRemoved: data.n }))
+      .catch(err => res.status(422).json(err));
   }
 };

@@ -1,32 +1,32 @@
-const db = require("../models");
-const axios = require("axios");
-const moment = require("moment");
+const db = require('../models');
+const axios = require('axios');
+const moment = require('moment');
 
-require("../config/connection");
+require('../config/connection');
 
 const seedDB = async () => {
   await db.User.deleteMany();
   await db.Transaction.deleteMany();
   await db.Payee.deleteMany();
 
-  let userId = "";
-  let transaction = "";
-  let payeeId = "";
+  let userId = '';
+  let transaction = '';
+  let payeeId = '';
   let user = {};
 
   userId = await db.User.create({
-    name: "Leanne Graham",
-    email: "sincere@april.biz",
+    name: 'Leanne Graham',
+    email: 'sincere@april.biz',
     firebaseId: "Leanne's FBID",
     totalBalance: 2000
   }).then(user => user.id);
 
   payeeId = await db.Payee.findOneAndUpdate(
     {
-      name: "Advanced Auto Parts"
+      name: 'Advanced Auto Parts'
     },
     {
-      name: "Advanced Auto Parts"
+      name: 'Advanced Auto Parts'
     },
     {
       new: true,
@@ -36,15 +36,17 @@ const seedDB = async () => {
 
   transaction = await db.Transaction.create({
     amount: 31.2,
-    memo: "Cadillac parts",
+    memo: 'Cadillac parts',
     isDebit: true,
     payee: payeeId
   }).then(transaction => transaction);
 
   await db.User.findOneAndUpdate(
     { _id: userId },
-    { $push: { transactions: transaction.id },
-      $inc: {totalBalance: transaction.isDebit ? -transaction.amount : transaction.amount} },
+    {
+      $push: { transactions: transaction.id },
+      $inc: { totalBalance: transaction.isDebit ? -transaction.amount : transaction.amount }
+    },
     { new: true }
   );
 
@@ -52,10 +54,10 @@ const seedDB = async () => {
 
   payeeId = await db.Payee.findOneAndUpdate(
     {
-      name: "AMC Cinemas"
+      name: 'AMC Cinemas'
     },
     {
-      name: "AMC Cinemas"
+      name: 'AMC Cinemas'
     },
     {
       new: true,
@@ -64,7 +66,7 @@ const seedDB = async () => {
   ).then(payee => payee.id);
 
   transaction = await db.Transaction.create({
-    date: moment("20190101", "YYYYMMDD").format(),
+    date: moment('20190101', 'YYYYMMDD').format(),
     payee: payeeId,
     amount: 22.99,
     memo: "New Year's movie night",
@@ -73,16 +75,18 @@ const seedDB = async () => {
 
   await db.User.findOneAndUpdate(
     { _id: userId },
-    { $push: { transactions: transaction.id },
-    $inc: {totalBalance: transaction.isDebit ? -transaction.amount : transaction.amount}},
+    {
+      $push: { transactions: transaction.id },
+      $inc: { totalBalance: transaction.isDebit ? -transaction.amount : transaction.amount }
+    },
     { new: true }
   );
 
   user = await db.User.find()
     .populate({
-      path: "transactions",
+      path: 'transactions',
       populate: {
-        path: "payee"
+        path: 'payee'
       }
     })
     .then(data => data);
@@ -92,7 +96,7 @@ const seedDB = async () => {
   console.log(`email: ${user[0].email}`);
   console.log(`FBID: ${user[0].firebaseId}`);
   console.log(`Balance: ${user[0].totalBalance}`);
-  console.log("Transactions:");
+  console.log('Transactions:');
   console.log(
     user[0].transactions.map(transaction => {
       console.log(`

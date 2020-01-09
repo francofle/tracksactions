@@ -1,4 +1,4 @@
-export const separateNumbersWithComma = (number) => {
+export const separateNumbersWithComma = number => {
   //string from redux:
   const currency = parseFloat(number).toFixed(2);
   let currencyParts = currency.toString().split('.');

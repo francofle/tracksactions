@@ -9,7 +9,7 @@ const GOOGLE_APPLICATION_CREDENTIALS = process.env.GOOGLE_APPLICATION_CREDENTIAL
 
 admin.initializeApp({
   credential: admin.credential.applicationDefault(),
-  databaseURL: "https://tracksactions-5c269.firebaseio.com"
+  databaseURL: 'https://tracksactions-5c269.firebaseio.com'
 });
 
 const app = express();
@@ -19,15 +19,13 @@ const cors = require('cors');
 app.use(cors());
 // TODO: Remove CORS
 
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 }
 app.use(routes);
-
-
 
 app.listen(PORT, () => {
   console.log(`🌎 API Server listening on PORT ${PORT}`);

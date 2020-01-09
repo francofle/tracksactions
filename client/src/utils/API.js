@@ -1,16 +1,17 @@
-import { auth } from "../firebase/firebase.utils";
-import firebase from "firebase";
+import { auth } from '../firebase/firebase.utils';
+import firebase from 'firebase';
 
 export default {
   createUser: async userData => {
-    return fetch("/api/users/register", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
+    return fetch('/api/users/register', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData)
     });
   },
   loginUser: async (email, password) => {
-    const user = await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+    const user = await auth
+      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
       .then(() => auth.signInWithEmailAndPassword(email, password))
       .then(response => response.user)
       .catch(error => error);
@@ -19,9 +20,9 @@ export default {
       try {
         const authToken = await auth.currentUser.getIdToken();
         const response = await fetch(`/api/users/getUserObject`, {
-          method: "post",
+          method: 'post',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             authorization: `Bearer ${authToken}`
           },
           body: JSON.stringify({ uid: user.uid })
