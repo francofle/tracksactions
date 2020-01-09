@@ -58,6 +58,8 @@ class NewTransactionForm extends React.Component {
     }
   };
 
+
+  // TODO: Move input fields to separate components
   render() {
     return (
       <div className='newTrxFormContainer'>
@@ -76,7 +78,7 @@ class NewTransactionForm extends React.Component {
                   className='trxDate'
                   type='date'
                   name='trxDate'
-                  placeholder={this.state.trxDate}
+                  defaultValue={this.state.trxDate}
                   onChange={this.handleInputChange}
                 />
               </div>
