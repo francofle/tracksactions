@@ -2,6 +2,14 @@ import React from 'react';
 import './newTrasnactionForm.styles.sass';
 import moment from 'moment';
 
+import API from '../../utils/API';
+
+import { connect } from 'react-redux';
+import {selectCurrentUser} from "../../redux/user/user.selectors";
+import {createStructuredSelector} from "reselect";
+
+//TODO: AirBnB Date Picker
+
 class NewTransactionForm extends React.Component {
   state = {
     trxDate: moment().format('MM/DD/YYYY'),
@@ -34,6 +42,7 @@ class NewTransactionForm extends React.Component {
     event.preventDefault();
 
     const { trxDate, trxPayee, trxAmount, trxMemo, trxType } = this.state;
+    const { currentUser } = this.props;
 
     if (
       !trxDate ||
@@ -48,16 +57,23 @@ class NewTransactionForm extends React.Component {
       alert('Date, Payee, Amount and Transaction Type are required');
     } else {
       // TODO: submit transaction to Mongo
-      console.log(`
-        Date: ${trxDate}, 
-        Payee: ${trxPayee},
-        Amount: ${trxAmount}, 
-        Memo: ${trxMemo}, 
-        Type: ${trxType}
-       `);
+      // API takes transaction Object which
+      const transaction = {
+        payee: trxPayee,
+        amount: trxAmount,
+        memo: trxMemo,
+        date: trxDate,
+        isDebit: trxType === 'expense'
+      };
+
+      // send transaction:
+      API.createTransaction(transaction, currentUser.mongoId, currentUser.token)
+        .then(response => response.json())
+        .then(data => console.log(data))
+      // TODO: update Redux with response (total balance, etc)
+      ;
     }
   };
-
 
   // TODO: Move input fields to separate components
   render() {
@@ -147,4 +163,8 @@ class NewTransactionForm extends React.Component {
   }
 }
 
-export default NewTransactionForm;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+});
+
+export default connect(mapStateToProps)(NewTransactionForm);

@@ -33,5 +33,15 @@ export default {
       }
     }
     return user;
+  },
+  createTransaction: (transaction, mongoId, authToken) => {
+    return fetch(`/api/transactions/${mongoId}`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${authToken}`
+      },
+      body: JSON.stringify(transaction)
+    });
   }
 };

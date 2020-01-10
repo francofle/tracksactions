@@ -9,7 +9,7 @@ module.exports = {
       .catch(error => res.status(422).json(error));
   },
   findById: (req, res) => {
-    db.Transaction.find(req.params.id)
+    db.Transaction.findById(req.params.id)
       .populate('payee')
       .then(transaction => res.json(transaction))
       .catch(error => res.status(422).json(error));

@@ -64,6 +64,7 @@ module.exports = {
     try {
       const userObject = await db.User.findOne({ firebaseId: `${req.body.uid}` });
       await res.json({
+        mongoId: userObject.id,
         name: userObject.name,
         email: userObject.email,
         firebaseId: userObject.firebaseId,

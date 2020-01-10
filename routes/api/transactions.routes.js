@@ -11,8 +11,8 @@ router
 // "/api/transcations/:id" route
 router
   .route('/:id')
-  .get(transactionsController.findById)
-  .post(transactionsController.create)
+  .get(checkIfAuthenticated, transactionsController.findById)
+  .post(checkIfAuthenticated, transactionsController.create)
   .put(transactionsController.update)
   .delete(transactionsController.removeById);
 
