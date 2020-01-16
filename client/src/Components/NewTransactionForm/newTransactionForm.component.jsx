@@ -1,6 +1,7 @@
 import React from 'react';
 import './newTrasnactionForm.styles.sass';
 import moment from 'moment';
+import {withRouter} from 'react-router-dom'
 
 import API from '../../utils/API';
 
@@ -32,9 +33,7 @@ class NewTransactionForm extends React.Component {
     this.setState(
       {
         [name]: value
-      },
-      () => console.log(this.state)
-    );
+      });
   };
 
   // validate field content and add transaction to Mongo
@@ -66,12 +65,17 @@ class NewTransactionForm extends React.Component {
         isDebit: trxType === 'expense'
       };
 
+
       // send transaction:
       API.createTransaction(transaction, currentUser.mongoId, currentUser.token)
         .then(response => response.json())
-        .then(data => console.log(data))
-      // TODO: update Redux with response (total balance, etc)
-      ;
+        .then(data => {
+          // TODO: update Redux with response (total balance, etc)
+          console.log(data);
+          this.props.history.push('/');
+        })
+        .catch(error => console.log(error))
+
     }
   };
 
@@ -167,4 +171,4 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
 });
 
-export default connect(mapStateToProps)(NewTransactionForm);
+export default withRouter(connect(mapStateToProps)(NewTransactionForm));
