@@ -75,7 +75,13 @@ class App extends React.Component {
               return this.props.currentUser ? <Redirect to={'/'} /> : <SignInRegister />;
             }}
           />
-          <Route exact path={'/newTransaction'} component={NewTransactionForm} />
+          <Route
+            exact
+            path={'/newTransaction'}
+            render={() => {
+              return this.props.currentUser ? <NewTransactionForm /> : <Redirect to={'/signIn'} />;
+            }}
+          />
         </Switch>
       </div>
     );

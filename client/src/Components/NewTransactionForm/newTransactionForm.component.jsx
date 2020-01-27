@@ -8,6 +8,7 @@ import API from '../../utils/API';
 import { connect } from 'react-redux';
 import {selectCurrentUser} from "../../redux/user/user.selectors";
 import {createStructuredSelector} from "reselect";
+import {setCurrentUser} from "../../redux/user/user.actions";
 
 //TODO: AirBnB Date Picker
 
@@ -71,7 +72,11 @@ class NewTransactionForm extends React.Component {
         .then(response => response.json())
         .then(data => {
           // TODO: update Redux with response (total balance, etc)
-          console.log(data);
+          const user = {
+            ...this.props.currentUser,
+            totalBalance: data.totalBalance
+          };
+          this.props.setCurrentUser(user);
           this.props.history.push('/');
         })
         .catch(error => console.log(error))
@@ -171,4 +176,11 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
 });
 
-export default withRouter(connect(mapStateToProps)(NewTransactionForm));
+const mapDispatchToProps = dispatch => {
+  return {
+    setCurrentUser: user => dispatch(setCurrentUser(user))
+  }
+};
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewTransactionForm));
