@@ -9,7 +9,7 @@ module.exports = {
       .catch(error => res.status(422).json(error));
   },
   findTransactions: (req, res) => {
-    db.User.findOne({ firebaseID: req.params.id })
+    db.User.findOne({ firebaseId: req.params.id })
       .populate({
         path: 'transactions',
         populate: {
