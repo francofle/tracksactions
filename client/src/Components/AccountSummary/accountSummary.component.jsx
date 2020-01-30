@@ -12,7 +12,7 @@ const AccountSummary = ({currentUser}) => {
       </div>
         <div className="accountSummaryBalance">
           <p>Hello {currentUser.name}, your current balance is:</p>
-          <h1><span className='balance'>${separateNumbersWithComma(currentUser.totalBalance.$numberDecimal)}</span></h1>
+          <h1><span className='balance'>${!currentUser.totalBalance ? 0.00 : separateNumbersWithComma(currentUser.totalBalance.$numberDecimal)}</span></h1>
         </div>
     </div>
   );
