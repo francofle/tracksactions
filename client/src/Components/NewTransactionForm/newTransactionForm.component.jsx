@@ -1,14 +1,14 @@
 import React from 'react';
 import './newTrasnactionForm.styles.sass';
 import moment from 'moment';
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
 import API from '../../utils/API';
 
 import { connect } from 'react-redux';
-import {selectCurrentUser} from "../../redux/user/user.selectors";
-import {createStructuredSelector} from "reselect";
-import {setCurrentUser} from "../../redux/user/user.actions";
+import { selectCurrentUser } from '../../redux/user/user.selectors';
+import { createStructuredSelector } from 'reselect';
+import { setCurrentUser } from '../../redux/user/user.actions';
 
 //TODO: AirBnB Date Picker
 
@@ -31,10 +31,9 @@ class NewTransactionForm extends React.Component {
       value = parseFloat(value).toFixed(2);
     }
 
-    this.setState(
-      {
-        [name]: value
-      });
+    this.setState({
+      [name]: value
+    });
   };
 
   // validate field content and add transaction to Mongo
@@ -66,7 +65,6 @@ class NewTransactionForm extends React.Component {
         isDebit: trxType === 'expense'
       };
 
-
       // send transaction:
       API.createTransaction(transaction, currentUser.mongoId, currentUser.token)
         .then(response => response.json())
@@ -79,8 +77,7 @@ class NewTransactionForm extends React.Component {
           this.props.setCurrentUser(user);
           this.props.history.push('/');
         })
-        .catch(error => console.log(error))
-
+        .catch(error => console.log(error));
     }
   };
 
@@ -179,8 +176,12 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(setCurrentUser(user))
-  }
+  };
 };
 
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewTransactionForm));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(NewTransactionForm)
+);
