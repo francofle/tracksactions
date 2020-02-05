@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import Transaction from '../Transaction/transaction.component';
 
 const TransactionsTable = ({ transactions }) => {
-
   return (
     <div className='transactionsTableContainer'>
       <div className='transactionsTableDiv'>
@@ -13,7 +12,7 @@ const TransactionsTable = ({ transactions }) => {
         </Link>
         <h1>Transactions</h1>
         {transactions.map(transaction => {
-          return <Transaction key={transaction._id} transaction={transaction}/>
+          return <Transaction key={transaction._id} transaction={transaction} />;
         })}
       </div>
     </div>

@@ -1,10 +1,13 @@
 import { createSelector } from 'reselect';
 
-const selectTransactions = rootReducer => rootReducer.transactions;
+const selectTransactions = rootReducer => rootReducer.transaction;
 
 export const selectAllTransactions = createSelector(
   [selectTransactions],
-  transactions => {
-    return transactions;
-  }
+  transaction => transaction.transactions
+);
+
+export const selectIsTransactionsFetching = createSelector(
+  [selectTransactions],
+  transaction => transaction.isFetching
 );

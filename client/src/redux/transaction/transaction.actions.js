@@ -1,12 +1,5 @@
 import { TransactionActionTypes } from './transaction.actionTypes';
 
-export const setTransactions = transactions => {
-  return {
-    type: TransactionActionTypes.SET_TRANSACTIONS,
-    payload: transactions
-  };
-};
-
 export const fetchTransactionsStart = () => {
   return {
     type: TransactionActionTypes.FETCH_TRANSACTIONS_START
@@ -31,18 +24,18 @@ export const fetchTransactionsStartAsync = (firebaseId, token) => {
   return async dispatch => {
     dispatch(fetchTransactionsStart());
     try {
-      const response = await fetch(`/api/transaction/${firebaseId}`, {
+      const response = await fetch(`/api/users/${firebaseId}`, {
         method: 'get',
         headers: {
           'Content-Type': 'application/json',
-          authorization: `Bearer: ${token}`
+          authorization: `Bearer ${token}`
         }
       });
-      const transactions = response.json();
-      dispatch(fetchTransactionsSuccess(transactions))
+      const data = await response.json();
+      dispatch(fetchTransactionsSuccess(data.transactions));
     } catch (error) {
       console.log(error);
-      dispatch(fetchTransactionsFailed(error))
+      dispatch(fetchTransactionsFailed(error));
     }
   };
 };

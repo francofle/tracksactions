@@ -2,17 +2,12 @@ import { TransactionActionTypes } from './transaction.actionTypes';
 
 const INITIAL_STATE = {
   transactions: null,
-  isFetching: false,
+  isFetching: true,
   errorMessage: undefined
 };
 
 const transactionReducer = (rootReducerState = INITIAL_STATE, action) => {
   switch (action.type) {
-    case TransactionActionTypes.SET_TRANSACTIONS:
-      return {
-        ...rootReducerState,
-        transactions: action.payload
-      };
     case TransactionActionTypes.FETCH_TRANSACTIONS_START:
       return {
         ...rootReducerState,
