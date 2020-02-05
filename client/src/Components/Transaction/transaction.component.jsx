@@ -2,10 +2,10 @@ import React from 'react';
 import './transaction.styles.sass';
 import TransactionText from '../TransactionText/TransactionText.component';
 import moment from 'moment';
-import {separateNumbersWithComma} from "../../utils/utilities";
+import { separateNumbersWithComma } from '../../utils/utilities';
 
 const Transaction = ({ transaction }) => {
-  const {date, amount, payee, memo} = transaction;
+  const { date, amount, payee, memo } = transaction;
   return (
     <div className='transactionContainer'>
       <div className='transaction'>
@@ -16,11 +16,14 @@ const Transaction = ({ transaction }) => {
           </div>
           <div className='input-group'>
             <label className='txtLabel'>Payee: </label>
-            <TransactionText text={payee.name} width={'75%'}/>
+            <TransactionText text={payee.name} width={'75%'} />
           </div>
           <div className='input-group'>
             <label className='txtLabel'>Amount: </label>
-            <TransactionText text={`$ ${separateNumbersWithComma(amount.$numberDecimal)}`} width={'50%'}/>
+            <TransactionText
+              text={`$ ${separateNumbersWithComma(amount.$numberDecimal)}`}
+              width={'50%'}
+            />
           </div>
         </div>
         <div className='rowContainer'>
