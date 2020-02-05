@@ -10,7 +10,7 @@ const TransactionsTable = ({ transactions }) => {
         <Link to='/newTransaction' className='newTransactionBtn'>
           <p className='addSign'>+</p>
         </Link>
-        <h1>Transactions</h1>
+        <h1 className={'title'}>Transactions</h1>
         {transactions.map(transaction => {
           return <Transaction key={transaction._id} transaction={transaction} />;
         })}

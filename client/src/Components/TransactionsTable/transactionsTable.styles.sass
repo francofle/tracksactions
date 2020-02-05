@@ -1,3 +1,5 @@
+@import './src/colors'
+
 .transactionsTableContainer
   display: flex
   flex-direction: column
@@ -8,6 +10,9 @@
     flex-direction: column
     flex: 1 1 auto
     background-color: rgb(139,215,136)
+    .title
+      color: $bgMainColor
+      margin-top: 20px
 
   .newTransactionBtn
     position: absolute
@@ -17,7 +22,7 @@
     border-radius: 50%
     padding: 0
     left: 90%
-    top: 230px
+    top: 250px
     width: 40px
     height: 40px
     color: #1E932E

@@ -11,7 +11,7 @@ const AccountSummary = ({currentUser}) => {
         <ProfilePic profileImg={'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3578&q=80'}/>
       </div>
         <div className="accountSummaryBalance">
-          <p>Hello {currentUser.name}, your current balance is:</p>
+          <p>Hello <b>{currentUser.name}</b>, your current balance is:</p>
           <h1><span className='balance'>${!currentUser.totalBalance ? 0.00 : separateNumbersWithComma(currentUser.totalBalance.$numberDecimal)}</span></h1>
         </div>
     </div>

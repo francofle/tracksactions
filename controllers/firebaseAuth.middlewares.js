@@ -11,7 +11,6 @@ const getAuthToken = (req, res, next) => {
 
 const checkIfAuthenticated = (req, res, next) => {
   getAuthToken(req, res, async () => {
-    console.log('checkIfAuthenticated');
     try {
       const { authToken } = req;
       const userInfo = await admin.auth().verifyIdToken(authToken);
