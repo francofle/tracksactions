@@ -2,24 +2,30 @@ import React from 'react';
 import './homepage.styles.sass';
 import { connect } from 'react-redux';
 import AccountSummary from '../../Components/AccountSummary/accountSummary.component';
+import TransactionsTable from '../../Components/TransactionsTable/transactionsTable.component';
+import WithSpinner from '../../Components/withSpinner/withSpinner.component';
+
+// Redux
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
-import TransactionsTable from '../../Components/TransactionsTable/transactionsTable.component';
-import {selectAllTransactions} from "../../redux/transaction/transaction.selectors";
-import {setTransactions} from "../../redux/transaction/transaction.actions";
+import { selectAllTransactions } from '../../redux/transaction/transaction.selectors';
+import { setTransactions } from '../../redux/transaction/transaction.actions';
+
+//withSpinner components:
+const TransactionsTableWithSpinner = WithSpinner(TransactionsTable);
 
 class HomePage extends React.Component {
+  state = {
+    loading: true
+  };
 
   componentDidMount() {
-    const {firebaseId, token} = this.props.currentUser;
     console.log('Component did mount: ');
-    console.log(typeof token);
-    this.fetchTransactions(firebaseId, token);
-  }
+    console.log(this.state);
+    const { firebaseId, token } = this.props.currentUser;
 
-  fetchTransactions = (firebaseId, token) => {
     // todo: redux thunk this. async it
-    const {setTransactions} = this.props;
+    const { setTransactions } = this.props;
     fetch(`/api/users/${firebaseId}`, {
       method: 'get',
       headers: {
@@ -28,17 +34,27 @@ class HomePage extends React.Component {
       }
     })
       .then(response => response.json())
-      .then(data => setTransactions(data.transactions))
+      .then(data => {
+        setTimeout(() => {
+          setTransactions(data.transactions);
+          this.setState({ loading: false,
+            transactions: data.transactions});
+          console.log(this.state);
+        }, 1000);
+      })
       .catch(error => console.log(error));
-  };
-  render() {
-    const {currentUser} = this.props;
+  }
 
+  render() {
+    const { currentUser } = this.props;
+    console.log('Rendered');
 
     return (
       <div className='homepage'>
         <AccountSummary currentUser={currentUser} />
-        <TransactionsTable transactions={this.props.transaction ? this.props.transaction.transactions : null}/>
+        <TransactionsTableWithSpinner
+          transactions={this.state.transactions ? this.state.transactions : null} isLoading={this.state.loading}
+        />
       </div>
     );
   }
@@ -52,7 +68,10 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => {
   return {
     setTransactions: transactions => dispatch(setTransactions(transactions))
-  }
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomePage);

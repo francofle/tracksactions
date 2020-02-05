@@ -1,7 +1,9 @@
-import {TransactionActionTypes} from "./transaction.actionTypes";
+import { TransactionActionTypes } from './transaction.actionTypes';
 
 const INITIAL_STATE = {
-  transactions: null
+  transactions: null,
+  isFetching: false,
+  errorMessage: undefined
 };
 
 const transactionReducer = (rootReducerState = INITIAL_STATE, action) => {
@@ -10,6 +12,24 @@ const transactionReducer = (rootReducerState = INITIAL_STATE, action) => {
       return {
         ...rootReducerState,
         transactions: action.payload
+      };
+    case TransactionActionTypes.FETCH_TRANSACTIONS_START:
+      return {
+        ...rootReducerState,
+        isFetching: true
+      };
+
+    case TransactionActionTypes.FETCH_TRANSACTIONS_SUCCESS:
+      return {
+        ...rootReducerState,
+        isFetching: false,
+        transactions: action.payload
+      };
+    case TransactionActionTypes.FETCH_TRANSACTIONS_FAILED:
+      return {
+        ...rootReducerState,
+        isFetching: false,
+        errorMessage: action.payload
       };
     default:
       return rootReducerState;

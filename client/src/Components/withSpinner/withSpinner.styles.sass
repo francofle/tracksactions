@@ -1,0 +1,27 @@
+@import './src/colors'
+
+.spinnerOverlay
+  height: 60vh
+  width: 100%
+  display: flex
+  justify-content: center
+  align-items: center
+  background-color: $bgMainColor
+
+  .spinnerContainer
+    display: inline-block
+    width: 50px
+    height: 50px
+    border: 3px solid $bgGreenColor
+    border-radius: 50%
+    border-top-color: $textColor
+    animation: spin 1s ease-in-out infinite
+    -webkit-animation: spin 1s ease-in-out infinite
+
+    @keyframes spin
+      to
+        -webkit-transform: rotate(360deg)
+
+    @-webkit-keyframes spin
+      to
+        -webkit-transform: rotate(360deg)
