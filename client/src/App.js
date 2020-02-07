@@ -4,6 +4,7 @@ import './App.css';
 import HomePage from './Pages/HomePage/homepage.component';
 import SignInRegister from './Pages/SignIn-Register/signIn-register.component';
 import NewTransactionForm from './Components/NewTransactionForm/newTransactionForm.component';
+import ProfilePage from "./Pages/ProfilePage/profilePage.component";
 
 //firebase Auth
 import { auth } from './firebase/firebase.utils';
@@ -82,6 +83,7 @@ class App extends React.Component {
               return this.props.currentUser ? <NewTransactionForm /> : <Redirect to={'/signIn'} />;
             }}
           />
+          <Route exact path={'/profile'} component={ProfilePage} />
         </Switch>
       </div>
     );
