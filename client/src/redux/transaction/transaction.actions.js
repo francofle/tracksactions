@@ -1,4 +1,5 @@
 import { TransactionActionTypes } from './transaction.actionTypes';
+import { auth } from "../../firebase/firebase.utils";
 
 export const fetchTransactionsStart = () => {
   return {
@@ -23,6 +24,7 @@ export const fetchTransactionsFailed = errorMessage => {
 export const fetchTransactionsStartAsync = (firebaseId, token) => {
   return async dispatch => {
     dispatch(fetchTransactionsStart());
+
     try {
       const response = await fetch(`/api/users/${firebaseId}`, {
         method: 'get',
@@ -32,10 +34,16 @@ export const fetchTransactionsStartAsync = (firebaseId, token) => {
         }
       });
       const data = await response.json();
-      dispatch(fetchTransactionsSuccess(data.transactions));
+      if (data.message) {
+        alert('Server errors. Please come back later');
+        await auth.signOut();
+        // await dispatch(fetchTransactionsFailed(data.message));
+      } else {
+        await dispatch(fetchTransactionsSuccess(data.transactions));
+      }
+
     } catch (error) {
-      console.log(error);
-      dispatch(fetchTransactionsFailed(error));
+      console.log(error.message);
     }
   };
 };

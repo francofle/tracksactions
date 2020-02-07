@@ -15,9 +15,11 @@ const ProfilePage = () => {
           <ProfilePic profileImg='https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3578&q=80' />
         </div>
         <div className="col-12 fileChooserContainer mt-2">
-          <h4>Upload picture</h4>
+          <h4>Upload Profile Image</h4>
+          {/* File Upload */}
         </div>
       </div>
+          {/* ImageCollection */}
 
 
       {/* Foto */}
