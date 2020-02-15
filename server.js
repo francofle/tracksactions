@@ -1,5 +1,6 @@
 const express = require('express');
 require('dotenv').config();
+const logger = require('morgan');
 const routes = require('./routes');
 const admin = require('firebase-admin');
 const PORT = process.env.PORT || 3005;
@@ -19,6 +20,7 @@ const cors = require('cors');
 app.use(cors());
 // TODO: Remove CORS
 
+app.use(logger('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

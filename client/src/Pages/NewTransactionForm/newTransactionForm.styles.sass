@@ -1,4 +1,4 @@
-@import './src/colors'
+@import '../../colors'
 
 .newTrxFormContainer
   height: 100vh
@@ -22,39 +22,8 @@
     height: 100%
     color: $bgMainColor
     background-color: $bgGreenColor
-    .rowContainer
-      padding: 0
-      margin: 0
-      display: flex
-      width: 100%
-      justify-content: center
-    .form-group
-      margin-left: 10px
-    .input-group-text
-      border-top-left-radius: 10px
-      border-bottom-left-radius: 10px
-      border: none
-      color: $textColor
-    .trxDate, .trxPayee,.trxAmount, .trxMemo
-      color: #00000087
-      background-color: $bgMainColor
-      border-top-right-radius: 10px
-      border-bottom-right-radius: 10px
-      border: none
-      padding-left: 5px
-    .trxAmount
-      width: 100px
-    .trxPayee
-      width: 400px
-    .trxDate
-      width: 150px
-    .trxMemoFormGroup
-      margin-left: 10px
-      width: 895px
-      .trxMemoInput
-        display: flex
-        justify-content: space-around
-        width: 100%
+    .row
+      max-width: 900px
 
     .debitCreditSelectContainer
       margin: 15px 0 20px
@@ -67,7 +36,7 @@
       select, option
         color: $textColor
 
-    .addTrxButton
+    .addTrxButton, .cancelTrxButton
       padding: 10px 40px
       margin-bottom: 20px
       background-color: $bgMainColor
@@ -75,10 +44,20 @@
       border-radius: 20px
       font-size: 16px
       font-weight: bold
+
+    .addTrxButton
       color: $textColor
       transition: color 300ms, background-color 300ms
       &:hover
         color: $bgMainColor
         background-color: $textColor
+
+    .cancelTrxButton
+      margin-left: 20px
+      color: #9d0000
+      transition: color 300ms, background-color 300ms
+      &:hover
+        color: $bgMainColor
+        background-color: #9d0000
 
 // TODO: MediaQueries

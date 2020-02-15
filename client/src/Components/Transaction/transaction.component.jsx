@@ -3,8 +3,9 @@ import './transaction.styles.sass';
 import TransactionText from '../TransactionText/TransactionText.component';
 import moment from 'moment';
 import { separateNumbersWithComma } from '../../utils/utilities';
+import {Link, withRouter} from 'react-router-dom';
 
-const Transaction = ({ transaction }) => {
+const Transaction = ({ transaction, history }) => {
   const { date, amount, payee, memo } = transaction;
   return (
     <div className='transactionContainer'>
@@ -25,6 +26,17 @@ const Transaction = ({ transaction }) => {
               width={'50%'}
             />
           </div>
+          <div className='editButtonContainer'>
+            <Link
+              className='editButton'
+              render
+              onClick={() => {
+                console.log(transaction._id);
+              }}
+            >
+              <i className='far fa-edit'></i>
+            </Link>
+          </div>
         </div>
         <div className='rowContainer'>
           <div className='input-group w-100'>
@@ -37,4 +49,4 @@ const Transaction = ({ transaction }) => {
   );
 };
 
-export default Transaction;
+export default withRouter(Transaction);

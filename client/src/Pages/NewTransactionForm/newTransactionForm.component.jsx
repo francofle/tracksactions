@@ -1,5 +1,5 @@
 import React from 'react';
-import './newTrasnactionForm.styles.sass';
+import './newTransactionForm.styles.sass';
 import moment from 'moment';
 import { withRouter } from 'react-router-dom';
 
@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { createStructuredSelector } from 'reselect';
 import { setCurrentUser } from '../../redux/user/user.actions';
+import FormInput from "../../Components/FormInput/formInput.component";
 
 //TODO: AirBnB Date Picker
 
@@ -31,9 +32,12 @@ class NewTransactionForm extends React.Component {
       value = parseFloat(value).toFixed(2);
     }
 
-    this.setState({
-      [name]: value
-    });
+    this.setState(
+      {
+        [name]: value
+      },
+      () => console.log(this.state)
+    );
   };
 
   // validate field content and add transaction to Mongo
@@ -89,67 +93,51 @@ class NewTransactionForm extends React.Component {
           <h1 className='newTransactionFormTitle'>New Transaction</h1>
         </div>
 
-        <form className='newTransactionForm'>
-          <div className='rowContainer'>
-            <div className='form-group'>
-              <div className='input-group'>
-                <div className='input-group-prepend'>
-                  <span className='input-group-text'>Date</span>
-                </div>
-                <input
-                  className='trxDate'
-                  type='date'
-                  name='trxDate'
-                  defaultValue={this.state.trxDate}
-                  onChange={this.handleInputChange}
-                />
-              </div>
+        <form className='newTransactionForm container-fluid'>
+          <div className='row w-100 d-flex'>
+            <div className='col-sm-3 col-xs-12 my-1'>
+              <FormInput
+                type='date'
+                name='trxDate'
+                label='Date'
+                value={this.state.trxDate}
+                handleChange={this.handleInputChange}
+                required
+              />
             </div>
-            <div className='form-group'>
-              <div className='input-group'>
-                <div className='input-group-prepend'>
-                  <span className='input-group-text'>Payee:</span>
-                  <input
-                    className='trxPayee'
-                    id='trxPayee'
-                    type='text'
-                    name='trxPayee'
-                    onChange={this.handleInputChange}
-                  />
-                </div>
-              </div>
+
+            <div className='col-xs-12 col-sm-6 my-1'>
+              <FormInput
+                id='trxPayee'
+                type='text'
+                name='trxPayee'
+                label='Payee'
+                value={this.state.trxPayee}
+                onChange={this.handleInputChange}
+              />
             </div>
-            <div className='form-group'>
-              <div className='input-group'>
-                <div className='input-group-prepend'>
-                  <span className='input-group-text'>Amount ($)</span>
-                  <input
-                    id='trxAmount'
-                    name='trxAmount'
-                    className='trxAmount'
-                    type='number'
-                    min='0.00'
-                    step='0.01'
-                    onChange={this.handleInputChange}
-                  />
-                </div>
-              </div>
+            <div className='col-sm-3 col-xs-12 my-1'>
+              <FormInput
+                id='trxAmount'
+                name='trxAmount'
+                type='number'
+                min='0.00'
+                step='0.01'
+                value={this.state.trxAmount}
+                label='Amount'
+                onChange={this.handleInputChange}
+              />
             </div>
           </div>
-          <div className='rowContainer'>
-            <div className='from-group trxMemoFormGroup'>
-              <div className='input-group'>
-                <div className='input-group-prepend trxMemoInput'>
-                  <span className='input-group-text'>Memo:</span>
-                  <input
-                    type='text'
-                    name='trxMemo'
-                    className='trxMemo w-100'
-                    placeholder='Optional'
-                    onChange={this.handleInputChange}
-                  />
-                </div>
-              </div>
+          <div className='row w-100'>
+            <div className="col-12 my-1">
+            <FormInput
+              type='text'
+              name='trxMemo'
+              label='Memo'
+              value={this.state.trxMemo}
+              handleChange={this.handleInputChange}
+            />
             </div>
           </div>
           <div className='debitCreditSelectContainer'>
@@ -160,9 +148,14 @@ class NewTransactionForm extends React.Component {
               <option value='income'>Income</option>
             </select>
           </div>
+          <div className="formButtons">
           <button type='submit' className='addTrxButton' onClick={this.handleAddTransactionButton}>
             Add Transaction
           </button>
+          <button type='submit' className='cancelTrxButton' onClick={() => this.props.history.goBack()}>
+            Cancel
+          </button>
+          </div>
         </form>
       </div>
     );

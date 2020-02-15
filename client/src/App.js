@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import HomePage from './Pages/HomePage/homepage.component';
 import SignInRegister from './Pages/SignIn-Register/signIn-register.component';
-import NewTransactionForm from './Components/NewTransactionForm/newTransactionForm.component';
+import NewTransactionForm from './Pages/NewTransactionForm/newTransactionForm.component';
 import ProfilePage from "./Pages/ProfilePage/profilePage.component";
 
 //firebase Auth
@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { createStructuredSelector } from 'reselect';
+import PageNotFound from "./Pages/404/PageNotFound.component";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -84,6 +85,7 @@ class App extends React.Component {
             }}
           />
           <Route exact path={'/profile'} component={ProfilePage} />
+          <Route component={PageNotFound} />
         </Switch>
       </div>
     );
