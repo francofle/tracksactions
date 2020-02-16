@@ -1,36 +1,30 @@
 @import './src/colors'
 
 .transactionContainer
-  margin: 20px 0 0 0
-  display: flex
-  justify-content: center
+  background-color: $bgMainColor
+  border-radius: 10px
+  margin-top: 10px
+  margin-bottom: 10px
+  padding-bottom: 10px
 
-  .transaction
-    display: flex
-    flex-direction: column
-    justify-content: space-around
-    width: 800px
-    padding-bottom: 20px
-    background-color: $bgMainColor
-    border-radius: 10px
+  label
     color: $textColor
 
-    .rowContainer
-      display: flex
-      justify-content: space-around
-      width: 100%
-      margin: 20px 0 0 0
-      padding: 0 0 0 15px
+  .editButton, .deleteButton
+    background: transparent none
+    border: none
+    font-size: 18px
 
-    .editButtonContainer
-      margin-right: 10px
-      padding: 0
-      .editButton
-        border: none
-        background: transparent none
-        color: $textColor
-        font-size: 18px
-        padding: 0 5px
+  .editButton
+    color: $textColor
+
+  .deleteButton
+    color: $darkRedColor
+
+@media (max-width: 768px)
+  .transactionContainer
+    label
+      margin: 0 0 0 0
 
 
 

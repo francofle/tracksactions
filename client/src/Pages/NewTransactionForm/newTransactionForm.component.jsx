@@ -15,7 +15,7 @@ import FormInput from "../../Components/FormInput/formInput.component";
 
 class NewTransactionForm extends React.Component {
   state = {
-    trxDate: moment().format('MM/DD/YYYY'),
+    trxDate: moment().format('YYYY-MM-DD'),
     trxPayee: '',
     trxMemo: '',
     trxAmount: '',
@@ -27,17 +27,27 @@ class NewTransactionForm extends React.Component {
     const { name } = event.target;
     let { value } = event.target;
 
-    // TODO: Validate and format amount before setting state
-    if (name === 'trxAmount') {
-      value = parseFloat(value).toFixed(2);
-    }
-
     this.setState(
       {
         [name]: value
       },
       () => console.log(this.state)
     );
+  };
+
+  handleInputFocusOut = event => {
+    const {name} = event.target;
+    let {value} = event.target;
+
+    // TODO: Validate and format amount before setting state
+    if (name === 'trxAmount' && value > 0) {
+      value = parseFloat(value).toFixed(2);
+
+      this.setState({
+        [name]:value
+      }, () => console.log(this.state))
+    }
+
   };
 
   // validate field content and add transaction to Mongo
@@ -102,6 +112,7 @@ class NewTransactionForm extends React.Component {
                 label='Date'
                 value={this.state.trxDate}
                 handleChange={this.handleInputChange}
+                placeholder={this.state.trxDate}
                 required
               />
             </div>
@@ -122,10 +133,12 @@ class NewTransactionForm extends React.Component {
                 name='trxAmount'
                 type='number'
                 min='0.00'
-                step='0.01'
+                step='any'
+                inputMode='decimal'
                 value={this.state.trxAmount}
-                label='Amount'
+                label='Amount ($)'
                 onChange={this.handleInputChange}
+                onBlur={this.handleInputFocusOut}
               />
             </div>
           </div>
