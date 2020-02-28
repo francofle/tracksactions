@@ -21,7 +21,7 @@ const checkIfAuthenticated = (req, res, next) => {
       if (error.code === 'auth/id-token-expired' || error.code === 'auth/id-token-revoked') {
         return res.status(401).json({ message: 'token expired' });
       }
-      return res.status(401).json({ message: 'You are not authorized to make this request' });
+      return res.status(401).json({ message: 'You are not authorized to make this request', code: 401, name: 'auth' });
     }
   });
 };

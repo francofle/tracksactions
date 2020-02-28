@@ -6,12 +6,6 @@ import TransactionsTable from '../../Components/TransactionsTable/transactionsTa
 import WithSpinner from '../../Components/withSpinner/withSpinner.component';
 
 // Redux
-import { createStructuredSelector } from 'reselect';
-import { selectCurrentUser } from '../../redux/user/user.selectors';
-import {
-  selectAllTransactions,
-  selectIsTransactionsFetching
-} from '../../redux/transaction/transaction.selectors';
 import { fetchTransactionsStartAsync } from '../../redux/transaction/transaction.actions';
 
 //withSpinner components:
@@ -24,11 +18,11 @@ class HomePage extends React.Component {
   }
 
   render() {
-    const { currentUser, isTransactionsFetching, transactions } = this.props;
+    const { currentUser, isTransactionsFetching, transactions, totalBalance } = this.props;
 
     return (
       <div className='homepage'>
-        <AccountSummary currentUser={currentUser} />
+        <AccountSummary currentUser={currentUser} totalBalance={totalBalance}/>
         <TransactionsTableWithSpinner
           transactions={transactions}
           isLoading={isTransactionsFetching}
@@ -38,10 +32,10 @@ class HomePage extends React.Component {
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  isTransactionsFetching: selectIsTransactionsFetching,
-  currentUser: selectCurrentUser,
-  transactions: selectAllTransactions
+const mapStateToProps = state => ({
+  isTransactionsFetching: state.transaction.isFetching,
+  currentUser: state.user.currentUser,
+  transactions: state.transaction.transactions
 });
 
 const mapDispatchToProps = dispatch => {

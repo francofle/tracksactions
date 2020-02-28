@@ -1,0 +1,119 @@
+@import './src/colors'
+
+.updateTransactionContainer
+  padding-top: 60px
+  display: flex
+  flex: 1 1 auto
+  flex-direction: column
+  height: 100vh
+
+  .pageTitleContainer
+    background-color: $bgMainColor
+    color: $textColor
+    padding: 52px 0
+    display: flex
+    justify-content: center
+    margin: 0
+
+    .title
+      padding: 0
+
+
+  .updateTransactionForm
+    padding: 20px 0 40px
+    display: flex
+    flex-direction: column
+    align-items: center
+    flex: 1 1 auto
+    background-color: $bgGreenColor
+
+    .row
+      max-width: 900px
+
+    .updateTransactionButtonsContainer
+      margin-top: 40px
+      display: flex
+      justify-content: space-between
+      width: 300px
+
+
+      .updateTransactionButton,
+      .cancelTrxButton
+        padding: 10px 40px
+        margin-bottom: 20px
+        background-color: $bgMainColor
+        background-position: left top
+        border: none
+        border-radius: 20px
+        font-size: 16px
+        font-weight: bold
+
+      .updateTransactionButton
+        background: linear-gradient(to left, $bgMainColor 50%, transparent 50%) right bottom
+        background-size: 200% 100%
+        color: $textColor
+        transition: 300ms ease-out all
+        &:hover
+          background-color: $textColor
+          background-position: left bottom
+          color: $bgMainColor
+
+      .disabledButton
+        background-color: darkgray
+        color: gray
+        background-size: 200%
+        transition: none
+        &:hover
+          background-color: darkgray
+
+
+      .cancelTrxButton
+        background: linear-gradient(to right, $bgMainColor 50%, transparent 50%) left bottom
+        background-size: 200% 100%
+        color: $darkRedColor
+        transition: 300ms ease-out all
+        &:hover
+          background-color: $darkRedColor
+          background-position: right bottom
+          color: $bgMainColor
+
+    .debitCreditSelectContainer
+      margin: 15px 0 20px
+      display: flex
+      align-items: center
+      label
+        font-weight: 600
+        margin-right: 10px
+        padding-top: 7px
+        color: $bgMainColor
+      select, option
+        color: $textColor
+
+  .errorContainer
+    background-color: $bgGreenColor
+    color: $bgMainColor
+    font-size: 24px
+    padding-top: 20px
+
+  .backButtonContainer
+    padding-right: 0
+    position: absolute
+    left: 0
+    z-index: 5
+
+    .backButton
+      margin: 0
+      height: 50px
+      width: 50px
+      font-size: 26px
+      border: none
+      border-radius: 50%
+      display: block
+      color: $bgMainColor
+      background: linear-gradient(to right, $textColor 50%, transparent 50%) left bottom
+      background-size: 200% 100%
+      transition: 300ms ease-out all
+      &:hover
+        background-color: $bgMainColor
+        background-position: right bottom
+        color: $textColor

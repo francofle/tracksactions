@@ -24,8 +24,8 @@ const transactionReducer = (rootReducerState = INITIAL_STATE, action) => {
       return {
         ...rootReducerState,
         isFetching: false,
-        errorMessage: action.payload
-      };
+        errorMessage: action.payload,
+        };
     default:
       return rootReducerState;
   }

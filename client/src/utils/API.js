@@ -43,5 +43,27 @@ export default {
       },
       body: JSON.stringify(transaction)
     });
+  },
+  findTransactionById: (transactionId, authToken) => {
+    return fetch(`/api/transactions/${transactionId}`, {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${authToken}`
+      }
+    }).catch(error => error)
+  },
+  updateTransactionById: (transactionId, authToken, updatedTransaction, mongoId) => {
+    return fetch(`/api/transactions/${transactionId}`, {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${authToken}`
+      },
+      body: JSON.stringify({
+        ...updatedTransaction,
+        mongoId
+      })
+    }).catch(error => error);
   }
 };

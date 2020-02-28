@@ -4,7 +4,7 @@ import './App.css';
 import HomePage from './Pages/HomePage/homepage.component';
 import SignInRegister from './Pages/SignIn-Register/signIn-register.component';
 import NewTransactionForm from './Pages/NewTransactionForm/newTransactionForm.component';
-import ProfilePage from "./Pages/ProfilePage/profilePage.component";
+import ProfilePage from './Pages/ProfilePage/profilePage.component';
 
 //firebase Auth
 import { auth } from './firebase/firebase.utils';
@@ -15,14 +15,15 @@ import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { createStructuredSelector } from 'reselect';
-import PageNotFound from "./Pages/404/PageNotFound.component";
+import PageNotFound from './Pages/404/PageNotFound.component';
+import UpdateTransaction from './Pages/UpdateTransaction/updateTransaction.component';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
     const { setCurrentUser } = this.props;
-
+    console.log('APP Mounted');
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userObject => {
       let data = null;
       if (userObject) {
@@ -54,7 +55,9 @@ class App extends React.Component {
   render() {
     return (
       <div className='App'>
+        <div className='sticky-top'>
         <Header />
+        </div>
         <Switch>
           <Route
             exact
@@ -84,7 +87,16 @@ class App extends React.Component {
               return this.props.currentUser ? <NewTransactionForm /> : <Redirect to={'/signIn'} />;
             }}
           />
-          <Route exact path={'/profile'} component={ProfilePage} />
+          <Route
+            exact
+            path={'/profile'}
+            render={() => (this.props.currentUser ? <ProfilePage /> : <Redirect to={'/signIn'} />)}
+          />
+
+          <Route
+            path={'/updateTransaction/:transactionId'}
+            render={() => (this.props.currentUser ? <UpdateTransaction /> : <Redirect to={'/'} />)}
+          />
           <Route component={PageNotFound} />
         </Switch>
       </div>

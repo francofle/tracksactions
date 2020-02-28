@@ -69,17 +69,16 @@ class NewTransactionForm extends React.Component {
       // TODO: remove alert() and add a message div
       alert('Date, Payee, Amount and Transaction Type are required');
     } else {
-      // TODO: submit transaction to Mongo
       // API takes transaction Object which
       const transaction = {
         payee: trxPayee,
         amount: trxAmount,
         memo: trxMemo,
-        date: trxDate,
+        date: moment.parseZone(trxDate).format('YYYY-MM-DD'),
         isDebit: trxType === 'expense'
       };
 
-      // send transaction:
+      // submit transaction to MongoDB
       API.createTransaction(transaction, currentUser.mongoId, currentUser.token)
         .then(response => response.json())
         .then(data => {
@@ -155,8 +154,8 @@ class NewTransactionForm extends React.Component {
           </div>
           <div className='debitCreditSelectContainer'>
             <label htmlFor='trxType'>Transaction Type:</label>
-            <select name='trxType' id='trxType' onChange={this.handleInputChange}>
-              <option defaultValue>Choose one...</option>
+            <select name='trxType' id='trxType' onChange={this.handleInputChange} defaultValue='expense'>
+              <option value='choose' disabled>Choose one...</option>
               <option value='expense'>Expense</option>
               <option value='income'>Income</option>
             </select>
@@ -165,7 +164,10 @@ class NewTransactionForm extends React.Component {
           <button type='submit' className='addTrxButton' onClick={this.handleAddTransactionButton}>
             Add Transaction
           </button>
-          <button type='submit' className='cancelTrxButton' onClick={() => this.props.history.goBack()}>
+          <button type='submit' className='cancelTrxButton' onClick={event => {
+            event.preventDefault();
+            this.props.history.push('/');
+          }}>
             Cancel
           </button>
           </div>
