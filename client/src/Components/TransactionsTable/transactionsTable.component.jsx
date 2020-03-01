@@ -30,7 +30,7 @@ class TransactionsTable extends React.Component {
       <div className='transactionsTableContainer container-fluid h-100'>
         <div className='row h-100'>
           <div className='transactionsTableDiv h-100'>
-            <Link to='/newTransaction' className='newTransactionBtn'>
+            <Link to='/newTransaction' className='newTransactionBtn position-sticky'>
               <p className='addSign'>+</p>
             </Link>
             <h1 className={'title'}>Transactions</h1>
