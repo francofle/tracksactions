@@ -6,7 +6,7 @@ import {separateNumbersWithComma} from "../../utils/utilities";
 const AccountSummary = ({currentUser}) => {
 
   return (
-    <div className="accountSummary sticky-top">
+    <div className="accountSummary">
       <div className="profileImgContainer">
         <ProfilePic profileImg={'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3578&q=80'}/>
       </div>

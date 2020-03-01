@@ -23,7 +23,6 @@ class App extends React.Component {
 
   componentDidMount() {
     const { setCurrentUser } = this.props;
-    console.log('APP Mounted');
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userObject => {
       let data = null;
       if (userObject) {
@@ -54,10 +53,11 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className='App'>
+      <div className='App h-100'>
         <div className='sticky-top'>
-        <Header />
+          <Header />
         </div>
+
         <Switch>
           <Route
             exact

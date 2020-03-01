@@ -19,7 +19,7 @@ class NewTransactionForm extends React.Component {
     trxPayee: '',
     trxMemo: '',
     trxAmount: '',
-    trxType: ''
+    trxType: 'expense'
   };
 
   // set state based on the text/values in the input fields
@@ -30,8 +30,7 @@ class NewTransactionForm extends React.Component {
     this.setState(
       {
         [name]: value
-      },
-      () => console.log(this.state)
+      }
     );
   };
 

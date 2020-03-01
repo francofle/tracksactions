@@ -12,12 +12,11 @@ const userReducer = (currentState = INITIAL_STATE, action) => {
         currentUser: action.payload
       };
     case UserActionTypes.SET_TOTAL_BALANCE:
-      const newState = Object.assign(
-        currentState,
+      Object.assign(
+         currentState,
         {},
         { currentUser: {...currentState.currentUser, totalBalance: { $numberDecimal: action.payload } } }
       );
-      console.log(newState);
       return currentState;
     default:
       return currentState;

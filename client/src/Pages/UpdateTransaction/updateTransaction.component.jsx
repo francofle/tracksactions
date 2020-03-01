@@ -7,9 +7,7 @@ import API from '../../utils/API';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setTotalBalance } from '../../redux/user/user.actions';
-
-// TODO fecha baja cada vez que se hace un update a la transacción
-
+import { auth } from '../../firebase/firebase.utils';
 
 class UpdateTransaction extends React.Component {
   state = {
@@ -79,6 +77,7 @@ class UpdateTransaction extends React.Component {
   handleInputChange = event => {
     const { name } = event.target;
     let { value } = event.target;
+
     const origTrxState = `orig${name.charAt(0).toUpperCase() + name.slice(1)}`;
 
     if (name === 'trxDate') {
@@ -120,9 +119,18 @@ class UpdateTransaction extends React.Component {
   };
 
   handleClick = event => {
-    const { trxDate, trxPayee, trxAmount, trxMemo, trxType, origTrxAmount, origTrxType } = this.state;
-    const { token } = this.props.currentUser;
     event.preventDefault();
+    const {
+      trxDate,
+      trxPayee,
+      trxAmount,
+      trxMemo,
+      trxType,
+      origTrxAmount,
+      origTrxType
+    } = this.state;
+    const { token } = this.props.currentUser;
+
 
     if (event.target.name === 'cancelUpdate') {
       return this.props.history.goBack();
@@ -132,12 +140,11 @@ class UpdateTransaction extends React.Component {
       const { transactionId } = this.props.match.params;
       const { mongoId } = this.props.currentUser;
 
-      let difference = (parseFloat(trxAmount).toFixed(2) - parseFloat(origTrxAmount)).toFixed(2);
-
-      if (trxType !== origTrxType && difference === '0.00') {
-        difference = parseFloat(origTrxAmount).toFixed(2)
-      } else if (origTrxType !== trxType && difference !== '0.00') {
-        difference = parseFloat(trxAmount).toFixed(2)
+      let difference = parseFloat(trxAmount) - parseFloat(origTrxAmount);
+      if (trxType !== origTrxType && difference === 0) {
+        difference = parseFloat(origTrxAmount)*2;
+      } else if (origTrxType !== trxType && difference !== 0) {
+        difference = (parseFloat(origTrxAmount)*2) + parseFloat(difference);
       }
 
       const transaction = {
@@ -176,7 +183,9 @@ class UpdateTransaction extends React.Component {
         {trxAmount === null ? (
           <div className='container-fluid h-100 errorContainer'>
             <div className='row'>
-              <div className='col-12'>{this.state.errorMessage}</div>
+              <div className='col-12' onLoad={() => setTimeout(() => auth.signOut(), 3)}>
+                {this.state.errorMessage}
+              </div>
             </div>
           </div>
         ) : (

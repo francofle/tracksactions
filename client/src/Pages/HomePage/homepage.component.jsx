@@ -21,12 +21,16 @@ class HomePage extends React.Component {
     const { currentUser, isTransactionsFetching, transactions, totalBalance } = this.props;
 
     return (
-      <div className='homepage'>
-        <AccountSummary currentUser={currentUser} totalBalance={totalBalance}/>
-        <TransactionsTableWithSpinner
-          transactions={transactions}
-          isLoading={isTransactionsFetching}
-        />
+      <div className='homepage container-fluid'>
+        <div className='row'>
+          <AccountSummary currentUser={currentUser} totalBalance={totalBalance} />
+        </div>
+        <div className='row h-100'>
+          <TransactionsTableWithSpinner
+            transactions={transactions}
+            isLoading={isTransactionsFetching}
+          />
+        </div>
       </div>
     );
   }

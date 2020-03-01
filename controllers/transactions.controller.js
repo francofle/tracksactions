@@ -60,9 +60,9 @@ module.exports = {
       });
   },
   update: async (req, res) => {
-    // todo fix totalBalance calc / include original amount and new amount in the request.
-    // todo make the calculation to calculate the new balance using only the difference
-    // todo use the new amount to update the transaction
+    /*TODO: fix totalBalance calc / include original amount and new amount in the request.
+    todo make the calculation to calculate the new balance using only the difference
+    todo use the new amount to update the transaction*/
     const { amount, payee, memo, isDebit, date, mongoId, difference } = req.body;
     const { id } = req.params;
 
