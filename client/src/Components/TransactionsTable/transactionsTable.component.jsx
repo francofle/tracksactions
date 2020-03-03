@@ -4,10 +4,26 @@ import { Link } from 'react-router-dom';
 import Transaction from '../Transaction/transaction.component';
 import { withRouter } from 'react-router-dom';
 import { auth } from '../../firebase/firebase.utils';
+import ModalConfirm from '../ModalConfirm/modalConfirm.component';
 
 class TransactionsTable extends React.Component {
   state = {
-    counter: 5
+    counter: 5,
+    show: false,
+    trxAmount: '',
+    trxDate: '',
+    trxPayee:'',
+    trxType: false
+  };
+
+  showModal = event => {
+    this.setState({
+      show: !this.state.show,
+      trxAmount: event.target.getAttribute('data-amount'),
+      trxDate: event.target.getAttribute('data-date'),
+      trxPayee: event.target.getAttribute('data-name'),
+      trxType: event.target.getAttribute('data-trxtype')
+    });
   };
 
   updateTrxBtnClicked = transactionId => {
@@ -17,7 +33,6 @@ class TransactionsTable extends React.Component {
   deleteTrxBtnClicked = transaction => {
     console.log(transaction);
     // todo: alert confirmation and delete form database upon confirmation, refresh component
-
   };
 
   sessionExpired = () => {
@@ -26,6 +41,7 @@ class TransactionsTable extends React.Component {
   };
   render() {
     const { transactions } = this.props;
+    const {trxDate, trxAmount, trxPayee, trxType} = this.state;
     return (
       <div className='transactionsTableContainer container-fluid h-100'>
         <div className='row h-100'>
@@ -34,6 +50,7 @@ class TransactionsTable extends React.Component {
               <p className='addSign'>+</p>
             </Link>
             <h1 className={'title'}>Transactions</h1>
+            <ModalConfirm onClose={this.showModal} show={this.state.show} title={'Delete Transaction'} body={`Are you sure you want to delete the transaction?`} transaction={{trxDate, trxPayee, trxAmount, trxType}} />
             {transactions ? (
               transactions.map(transaction => {
                 return (
@@ -41,7 +58,7 @@ class TransactionsTable extends React.Component {
                     key={transaction._id}
                     transaction={transaction}
                     updateTrxBtnClicked={this.updateTrxBtnClicked}
-                    deleteTrxBtnClicked={this.deleteTrxBtnClicked}
+                    deleteTrxBtnClicked={event => this.showModal(event)}
                   />
                 );
               })

@@ -48,8 +48,8 @@ const Transaction = ({ transaction, updateTrxBtnClicked, deleteTrxBtnClicked }) 
             </button>
           </div>
           <div className='deleteButtonContainer col-2'>
-            <button className='deleteButton' onClick={() => deleteTrxBtnClicked(transaction)}>
-              <i className='fas fa-trash-alt'></i>
+            <button className='deleteButton' onClick={deleteTrxBtnClicked} data-name={payee.name} data-date={date} data-amount={amount.$numberDecimal} data-trxType={isDebit}>
+              <i className='fas fa-trash-alt trashIcon' data-name={payee.name} data-date={date} data-amount={amount.$numberDecimal} data-trxType={isDebit}></i>
             </button>
           </div>
             <div className="col-4"></div>

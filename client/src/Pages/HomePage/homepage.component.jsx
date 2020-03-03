@@ -22,7 +22,7 @@ class HomePage extends React.Component {
 
     return (
       <div className='homepage container-fluid'>
-        <div className='row sticky-top'>
+        <div className='row'>
           <AccountSummary currentUser={currentUser} totalBalance={totalBalance} />
         </div>
         <div className='row h-100'>
