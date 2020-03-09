@@ -131,9 +131,26 @@ module.exports = {
       .then(data => res.json({ transactionsRemoved: data.deletedCount }))
       .catch(err => res.status(422).json(err));
   },
-  removeById: (req, res) => {
-    db.Transaction.deleteOne({ _id: req.params.id })
-      .then(data => res.json({ transactionsRemoved: data.n }))
-      .catch(err => res.status(422).json(err));
+  removeById: async (req, res) => {
+    const { mongoId, transactionId, amount, isDebit } = req.body;
+
+    const user = await db.User.findOneAndUpdate(
+      { _id: mongoId },
+      {
+        $pull: { transactions: transactionId },
+        $inc: { totalBalance: isDebit ? amount : -amount }
+      },
+      {
+        new: true
+      }
+    ).then(user => {
+
+      return user
+    });
+
+
+    const transaction = await db.Transaction.findOneAndDelete({ _id: transactionId });
+
+    await res.json({data: transaction, user})
   }
 };

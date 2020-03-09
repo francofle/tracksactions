@@ -29,6 +29,7 @@ class HomePage extends React.Component {
           <TransactionsTableWithSpinner
             transactions={transactions}
             isLoading={isTransactionsFetching}
+            fetchTransactionsAsync={this.props.fetchTransactionsStartAsync}
           />
         </div>
       </div>

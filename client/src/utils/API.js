@@ -65,5 +65,22 @@ export default {
         mongoId
       })
     }).catch(error => error);
+  },
+  deleteTransactionById: (transaction, authToken, mongoId) => {
+    // transaction = {trxAmount, trxId, trxDate, trxType}
+    return fetch(`/api/transactions/${transaction.trxId}`, {
+      method: 'delete',
+      headers: {
+        'Content-Type':'application/json',
+        authorization: `Bearer ${authToken}`
+      },
+      body: JSON.stringify({
+        mongoId,
+        transactionId: transaction.trxId,
+        amount: transaction.trxAmount,
+        isDebit: transaction.trxType
+      })
+    })
+      .catch(error => console.log(error));
   }
 };

@@ -13,7 +13,37 @@
   align-items: center
 
   .modal-content
+    background-color: $bgMainColor
     color: $textColor
 
     .modalTrx
       color: $darkTextColor
+      margin: 0
+
+  .closeButton, .deleteButton
+    border-radius: 20px
+    padding: 5px 25px
+    margin-left: 10px
+    background-position: left top
+
+  .closeButton
+    background: linear-gradient(to left, transparent 50%, $textColor 50%) right bottom
+    background-size: 200% 100%
+    color: $textColor
+    border-color: $textColor
+    transition: 300ms ease-out all
+    &:hover
+      color: $bgMainColor
+      background-position: left bottom
+
+  .deleteButton
+    background: linear-gradient(to right, $darkRedColor 50%, transparent 50%) right bottom
+    background-size: 200% 100%
+    border-color: $darkRedColor
+    color: $darkRedColor
+    transition: 300ms ease-out all
+    &:hover
+      color: $bgMainColor
+      background-position: left bottom
+
+
