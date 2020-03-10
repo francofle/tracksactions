@@ -4,6 +4,7 @@ const logger = process.env.NODE_ENV === 'production' ? null : require('morgan');
 const routes = require('./routes');
 const admin = require('firebase-admin');
 const PORT = process.env.PORT || 5000;
+const path = require('path');
 require('./config/connection');
 
 admin.initializeApp({
@@ -26,9 +27,15 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(routes);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
+
+  // Send all requests to React App
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './client/build/index.html'));
+  })
 } else {
   // TODO: Remove cors before deployment
   const cors = require('cors');
@@ -36,7 +43,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(logger('dev'));
 // TODO: Remove CORS
 }
-app.use(routes);
+
 
 app.listen(PORT, () => {
   console.log(`🌎 API Server listening on PORT ${PORT}`);
