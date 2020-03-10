@@ -27,7 +27,6 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(routes);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
@@ -37,6 +36,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(logger('dev'));
 }
 
+app.use(routes);
 // Send all requests to React App
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
