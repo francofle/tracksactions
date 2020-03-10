@@ -19,6 +19,7 @@ Technologies Used:
 * Reselect
 * Mongoose
 * MomentJS
+* JavaScript
 * Bootstrap
 * Sass
 * HTML
