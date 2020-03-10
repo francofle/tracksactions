@@ -32,18 +32,15 @@ app.use(routes);
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 } else {
-  // TODO: Remove cors before deployment
   const cors = require('cors');
   app.use(cors());
   app.use(logger('dev'));
-// TODO: Remove CORS
 }
 
 // Send all requests to React App
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-})
-
+});
 
 app.listen(PORT, () => {
   console.log(`🌎 API Server listening on PORT ${PORT}`);
