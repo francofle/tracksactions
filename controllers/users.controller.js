@@ -71,6 +71,7 @@ module.exports = {
         totalBalance: userObject.totalBalance
       });
     } catch (error) {
+      console.log(error);
       await res.status(422).json(error);
     }
   }
