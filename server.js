@@ -3,7 +3,7 @@ require('dotenv').config();
 const logger = process.env.NODE_ENV === 'production' ? null : require('morgan');
 const routes = require('./routes');
 const admin = require('firebase-admin');
-const PORT = process.env.PORT || 3005;
+const PORT = process.env.PORT || 5000;
 require('./config/connection');
 
 admin.initializeApp({

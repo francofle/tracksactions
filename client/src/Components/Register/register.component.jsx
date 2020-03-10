@@ -26,7 +26,6 @@ class Register extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     const { name, email, password } = this.state;
-    console.log(name, email, password);
     // TODO: change alerts() to be displayed in page instead of alerts
     if (name === "" || !name) {
       return alert("Please enter a name");
