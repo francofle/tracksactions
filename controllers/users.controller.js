@@ -45,17 +45,13 @@ module.exports = {
         displayName: req.body.name
       });
 
-      try {
-        const dbUser = await db.User.findOneAndUpdate(
-          { email: req.body.email },
-          { firebaseId: user.uid, transactions: [], ...req.body },
-          { new: true, upsert: true }
-        );
+      const dbUser = await db.User.findOneAndUpdate(
+        { email: req.body.email },
+        { firebaseId: user.uid, transactions: [], ...req.body },
+        { new: true, upsert: true }
+      );
 
-        await res.json(dbUser);
-      } catch (error) {
-        await res.json(error);
-      }
+      await res.json(dbUser);
     } catch (error) {
       await res.json(error);
     }
