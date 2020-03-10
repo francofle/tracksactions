@@ -88,7 +88,9 @@ class TransactionsTable extends React.Component {
               body={`Are you sure you want to delete the transaction?`}
               transaction={{ trxDate, trxPayee, trxAmount, trxType, trxId }}
             />
+
             {transactions ? (
+              transactions.length > 0 ? (
               transactions.map(transaction => {
                 return (
                   <Transaction
@@ -99,6 +101,11 @@ class TransactionsTable extends React.Component {
                   />
                 );
               })
+              ) : (
+                <div className="noTransactionDiv">
+                  <p>Add transactions by clicking the plus sign.</p>
+                </div>
+              )
             ) : (
               // todo: move this to App.js and add conditional routing
               <div className='sessionExpiredContainer container-fluid'>
