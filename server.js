@@ -6,10 +6,19 @@ const admin = require('firebase-admin');
 const PORT = process.env.PORT || 3005;
 require('./config/connection');
 
-const GOOGLE_APPLICATION_CREDENTIALS = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-
 admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
+  credential: admin.credential.cert({
+    type: process.env.GOOGLE_APPLICATION_AUTH_TYPE,
+    project_id: process.env.GOOGLE_APPLICATION_PROJECT_ID,
+    private_key_id: process.env.GOOGLE_APPLICATION_PRIVATE_KEY_ID,
+    private_key: process.env.GOOGLE_APPLICATION_PRIVATE_KEY.replace(/\\n/g, '\n'),
+    client_email: process.env.GOOGLE_APPLICATION_CLIENT_EMAIL,
+    client_id: process.env.GOOGLE_APPLICATION_CLIENT_ID,
+    auth_uri: process.env.GOOGLE_APPLICATION_AUTH_URI,
+    token_uri: process.env.GOOGLE_APPLICATION_TOKEN_URI,
+    auth_provider_x509_cert_url: process.env.GOOGLE_APPLICATION_AUTH_PROVIDER_X509_CERT_URL,
+    client_x509_cert_url: process.env.GOOGLE_APPLICATION_CLIENT_X509_CERT_URL
+  }),
   databaseURL: 'https://tracksactions-5c269.firebaseio.com'
 });
 
