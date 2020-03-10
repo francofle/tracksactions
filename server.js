@@ -15,17 +15,17 @@ admin.initializeApp({
 
 const app = express();
 
-// TODO: Remove cors before deployment
-const cors = require('cors');
-app.use(cors());
-// TODO: Remove CORS
-
-app.use(logger('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
+} else {
+  // TODO: Remove cors before deployment
+  const cors = require('cors');
+  app.use(cors());
+  app.use(logger('dev'));
+// TODO: Remove CORS
 }
 app.use(routes);
 
