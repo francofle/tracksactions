@@ -27,7 +27,7 @@ class App extends React.Component {
       let data = null;
       if (userObject) {
         const token = await auth.currentUser.getIdToken();
-        const response = await fetch('/api/users/getUserObject', {
+        const response = await fetch('/api/users/getuserobject', {
           method: 'post',
           headers: {
             'Content-Type': 'application/json',

@@ -10,10 +10,10 @@ router.route('/:id').get(checkIfAuthenticated, usersController.findTransactions)
 //   .put(usersController.update)
 //   .delete(usersController.delete);
 
-router.route('/byPayees/:id').get(checkIfAuthenticated, usersController.transactionsByPayee);
+router.route('/bypayees/:id').get(checkIfAuthenticated, usersController.transactionsByPayee);
 
 router.route('/register').post(usersController.createUser);
 
-router.route('/getUserObject').post(checkIfAuthenticated, usersController.getUserObject);
+router.route('/getuserobject').post(checkIfAuthenticated, usersController.getUserObject);
 
 module.exports = router;
