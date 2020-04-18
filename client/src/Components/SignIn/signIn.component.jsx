@@ -36,6 +36,20 @@ class SignIn extends React.Component {
     });
   };
 
+  handleDemoLogin = event => {
+    event.preventDefault();
+    const email = process.env.REACT_APP_DEMO_LOGIN_USERNAME;
+    const password = process.env.REACT_APP_DEMO_LOGIN_PASSWORD;
+    API.loginUser(email, password).then(user => {
+      if (user.code) {
+        // TODO: Handle error if user.code exists (maybe show a modal)
+        this.emailInput.value = '';
+        this.passwordInput.value = '';
+        alert(user.message);
+      }
+    });
+  };
+
   render() {
     return (
       <div className="signIn w-100">
@@ -71,6 +85,9 @@ class SignIn extends React.Component {
                 Sign In
               </button>
               <Link to="/register" className='registerLink'>Register</Link>
+            </div>
+            <div className='demoLoginContainer'>
+              <p id='loginText' onClick={this.handleDemoLogin}>Click here to to sign in with demo account.</p>
             </div>
           </form>
         </div>

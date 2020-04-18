@@ -1,3 +1,4 @@
+@import './src/colors'
 .signIn
 
   .title
@@ -48,5 +49,22 @@
         color: darken(rgb(139,215,136), 20)
         background-color: white
         border-color: white
+
+    .demoLoginContainer
+      background-color: darken(white, 10)
+      margin-top: 20px
+      padding: 5px 10px
+      display: flex
+      justify-content: center
+      align-items: center
+      border-radius: 10px
+      &:hover
+        cursor: pointer
+        background-color: white
+      #loginText
+        color: $textColor
+        padding: 0
+        margin: 0
+        font-size: .8rem
 
 
